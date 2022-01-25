@@ -11,9 +11,9 @@
 #include "geometry_msgs/Point.h"
 #include "geometry_msgs/PoseStamped.h"
 
-#include "test_cpp/auction_auction.h"
+#include "bt_project/auction_auction.h"
 #include "ros/ros.h"
-#include "test_cpp/obstacle_points.h"
+#include "bt_project/obstacle_points.h"
 
 #include "nav_msgs/Odometry.h"
 
@@ -29,9 +29,9 @@ namespace bt_state
         geometry_msgs::Pose goalPose;
         geometry_msgs::Pose homePosition;
 
-        test_cpp::auction_auction currentTask;
+        bt_project::auction_auction currentTask;
 
-        test_cpp::obstacle_points obstacles_points;
+        bt_project::obstacle_points obstacles_points;
 
         ros::NodeHandle nodeHandle;
         ros::Publisher pub_uavWP;
@@ -81,7 +81,7 @@ namespace bt_state
 
 
 
-    void obstaclePointsCB(const test_cpp::obstacle_points& msg)
+    void obstaclePointsCB(const bt_project::obstacle_points& msg)
     {
         statePtr->obstacles_points = msg;
     }

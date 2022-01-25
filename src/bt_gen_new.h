@@ -16,7 +16,7 @@
 
 #include <tuple>
 
-#include "test_cpp/auction_winner.h"
+#include "bt_project/auction_winner.h"
 
 
 namespace bt
@@ -533,7 +533,7 @@ namespace bt
 
 
 
-    Node_bt* getStartCondition(Node_bt* root, test_cpp::auction_winner task, const std::vector<behavior_test>& available_behaviors)
+    Node_bt* getStartCondition(Node_bt* root, bt_project::auction_winner task, const std::vector<behavior_test>& available_behaviors)
     {
         //Node_bt root("BehaviorTree");
         //root.addAttribute("ID", "BehaviorTree", "");
@@ -756,7 +756,7 @@ namespace bt
         return stream.str();
     }
 
-std::string remove(test_cpp::auction_winner task, const std::vector<behavior_test>& available_behaviors)
+std::string remove(bt_project::auction_winner task, const std::vector<behavior_test>& available_behaviors)
     {
 
         //behavior_test goalAction;
@@ -1030,7 +1030,7 @@ std::string remove(test_cpp::auction_winner task, const std::vector<behavior_tes
 
 
 
-    void getNewTree(BT::Tree& tree, BT::BehaviorTreeFactory& factory, const test_cpp::auction_winner& task, const std::vector<bt::behavior_test>& behaviorLibrary)
+    void getNewTree(BT::Tree& tree, BT::BehaviorTreeFactory& factory, const bt_project::auction_winner& task, const std::vector<bt::behavior_test>& behaviorLibrary)
     {
         Node_bt root = bt::Node_bt("BehaviorTree");
         root.addAttribute("ID", "BehaviorTree", "");

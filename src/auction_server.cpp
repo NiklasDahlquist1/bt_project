@@ -9,19 +9,19 @@
 
 auction::Auction_server* auction_server_ptr;
 // callbacks        
-void bidsCB(const test_cpp::auction_bidArray& msg)
+void bidsCB(const bt_project::auction_bidArray& msg)
 {
     auction_server_ptr->bidsArrayCB(msg);
 }
-void newClientCB(const test_cpp::auction_client& msg)
+void newClientCB(const bt_project::auction_client& msg)
 {
     auction_server_ptr->newClientCB(msg);
 }
-void newAuctionCB(const test_cpp::auction_auction& msg)
+void newAuctionCB(const bt_project::auction_auction& msg)
 {
     auction_server_ptr->newAuctionCB(msg);
 }
-void newAuctionArrayCB(const test_cpp::auction_auctionArray& msg)
+void newAuctionArrayCB(const bt_project::auction_auctionArray& msg)
 {
     auction_server_ptr->newAuctionArrayCB(msg);
 }

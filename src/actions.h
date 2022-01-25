@@ -414,9 +414,9 @@ class GetPointFromPotentialField : public SyncActionNode
                 ROS_INFO_STREAM("UAVAtHomePoint, pointer to state = null");
             }
 
-            std::vector<test_cpp::obstacle_point> obs_action = state->obstacles_points.obstacles;//obs_action;//= state->obstacles_points.obstacles;
+            std::vector<bt_project::obstacle_point> obs_action = state->obstacles_points.obstacles;//obs_action;//= state->obstacles_points.obstacles;
 
-            test_cpp::obstacle_point goalPF;
+            bt_project::obstacle_point goalPF;
             goalPF.pos.x = state->goalPose.position.x;
             goalPF.pos.y = state->goalPose.position.y;
             goalPF.pos.z = state->goalPose.position.z;

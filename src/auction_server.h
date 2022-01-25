@@ -5,12 +5,12 @@
 
 #include "ros/ros.h"
 #include "std_msgs/String.h"
-#include "test_cpp/auction_bid.h"
-#include "test_cpp/auction_auction.h"
-#include "test_cpp/auction_client.h"
-#include "test_cpp/auction_winner.h"
-#include "test_cpp/auction_auctionArray.h"
-#include "test_cpp/auction_bidArray.h"
+#include "bt_project/auction_bid.h"
+#include "bt_project/auction_auction.h"
+#include "bt_project/auction_client.h"
+#include "bt_project/auction_winner.h"
+#include "bt_project/auction_auctionArray.h"
+#include "bt_project/auction_bidArray.h"
 
 
 #include <vector>
@@ -36,15 +36,15 @@ namespace auction
         //ros::Publisher auction_availableMulti_pub;
 
 
-        std::vector<test_cpp::auction_client> registeredClients; //name, ID
+        std::vector<bt_project::auction_client> registeredClients; //name, ID
         
-        std::vector<test_cpp::auction_auction> auctionsQueue; // auction_type, creator_ID, creator_name, end_time, min_price, task_data 
+        std::vector<bt_project::auction_auction> auctionsQueue; // auction_type, creator_ID, creator_name, end_time, min_price, task_data 
         int auctionIDCounter = 0;
 
         //std::vector<std::tuple<std::string, float, int>> bidsCurrentAuction; // name, price, ID
-        std::vector<test_cpp::auction_bidArray> bidsCurrentAuction; // name, price, ID
+        std::vector<bt_project::auction_bidArray> bidsCurrentAuction; // name, price, ID
 
-        std::vector<test_cpp::auction_auction> currentAuctions;
+        std::vector<bt_project::auction_auction> currentAuctions;
         bool currentAuctionRunning = false; //Used for single auction logic
         bool auctionRunning = false; //Used for auction logic
 
@@ -59,16 +59,16 @@ namespace auction
         ~Auction_server();
 
 
-        void bidsCB(const test_cpp::auction_bidArray& msg); 
-        void newClientCB(const test_cpp::auction_client& msg); 
-        void newAuctionCB(const test_cpp::auction_auction& msg); // maybe remove this and only use the array version?
+        void bidsCB(const bt_project::auction_bidArray& msg); 
+        void newClientCB(const bt_project::auction_client& msg); 
+        void newAuctionCB(const bt_project::auction_auction& msg); // maybe remove this and only use the array version?
         void declareWinner();
         void publishNewAuction();
 
         void updateAuctionsLogic();
-        void bidsArrayCB(const test_cpp::auction_bidArray& msg); 
+        void bidsArrayCB(const bt_project::auction_bidArray& msg); 
 
-        void newAuctionArrayCB(const test_cpp::auction_auctionArray& msg);
+        void newAuctionArrayCB(const bt_project::auction_auctionArray& msg);
     };
     
 
@@ -76,13 +76,13 @@ namespace auction
 
     Auction_server::Auction_server(int bidsThreshold, double auctionTimeout)
     {
-        this->auction_available_pub = nodeHandle.advertise<test_cpp::auction_auctionArray>("auction_available", 1000);
-        this->auction_winner_pub = nodeHandle.advertise<test_cpp::auction_winner>("auction_winner", 1000);
-        this->auction_return_pub = nodeHandle.advertise<test_cpp::auction_winner>("auction_return", 1000);
-        //ros::Publisher auction_bid_pub = nodeHandle.advertise<test_cpp::auction_bid>("auction_bid", 1000);
-        //ros::Publisher auction_newClient_pub = nodeHandle.advertise<test_cpp::auction_client>("auction_newClient", 1000);
+        this->auction_available_pub = nodeHandle.advertise<bt_project::auction_auctionArray>("auction_available", 1000);
+        this->auction_winner_pub = nodeHandle.advertise<bt_project::auction_winner>("auction_winner", 1000);
+        this->auction_return_pub = nodeHandle.advertise<bt_project::auction_winner>("auction_return", 1000);
+        //ros::Publisher auction_bid_pub = nodeHandle.advertise<bt_project::auction_bid>("auction_bid", 1000);
+        //ros::Publisher auction_newClient_pub = nodeHandle.advertise<bt_project::auction_client>("auction_newClient", 1000);
 
-        //this->auction_availableMulti_pub = nodeHandle.advertise<test_cpp::auction_auction>("auction_availableMulti", 1000);
+        //this->auction_availableMulti_pub = nodeHandle.advertise<bt_project::auction_auction>("auction_availableMulti", 1000);
 
         this->bidsThreshold = bidsThreshold;
         this->auctionTimeout = auctionTimeout;
@@ -113,7 +113,7 @@ namespace auction
 
 
             //publish the new active auction
-            test_cpp::auction_auctionArray auction_msg;
+            bt_project::auction_auctionArray auction_msg;
             auction_msg.auctions = currentAuctions;
 
 
@@ -130,11 +130,11 @@ namespace auction
 
 
     
-    void Auction_server::bidsCB(const test_cpp::auction_bidArray& msg)
+    void Auction_server::bidsCB(const bt_project::auction_bidArray& msg)
     {
         //only accept bid if it has the ID of the current auction
         bool bidOk = false;
-        for(test_cpp::auction_auction a : currentAuctions)
+        for(bt_project::auction_auction a : currentAuctions)
         {
             if(msg.auction_ID == a.auction_ID)
             {
@@ -150,7 +150,7 @@ namespace auction
         }
     }
 
-    void Auction_server::bidsArrayCB(const test_cpp::auction_bidArray& msg)
+    void Auction_server::bidsArrayCB(const bt_project::auction_bidArray& msg)
     {
         //only accept bid if it has the ID of any of the current auctions
         bool bidOK = false;
@@ -162,9 +162,9 @@ namespace auction
         //ROS_INFO_STREAM(msg.auction_ID << " " << auctionIDCounter);
     }
 
-    void Auction_server::newAuctionCB(const test_cpp::auction_auction& msg)
+    void Auction_server::newAuctionCB(const bt_project::auction_auction& msg)
     {
-        test_cpp::auction_auction auction;
+        bt_project::auction_auction auction;
         auction = msg;
         auction.auction_ID = auctionIDCounter; //use "unique" ID for auction, not used, an ID is generated for each "bundle" of auctions available
         //this->auctionIDCounter++;
@@ -174,41 +174,41 @@ namespace auction
     }
 
 
-    void Auction_server::newAuctionArrayCB(const test_cpp::auction_auctionArray& msg)
+    void Auction_server::newAuctionArrayCB(const bt_project::auction_auctionArray& msg)
     {
-        for(test_cpp::auction_auction a : msg.auctions)
+        for(bt_project::auction_auction a : msg.auctions)
         {
             this->auctionsQueue.push_back(a);
         }
 
  
         std::cout << "Current auctions (size: " << currentAuctions.size() << "): " << std::endl;
-        for(test_cpp::auction_auction auction : this->currentAuctions)
+        for(bt_project::auction_auction auction : this->currentAuctions)
         {
             std::cout << "Auction name: " << auction.task_name << ", data: " << auction.task_data << std::endl;
         }
         std::cout << "Current auctions queue:" << auctionsQueue.size() << "): " << std::endl;
-        for(test_cpp::auction_auction auction : this->auctionsQueue)
+        for(bt_project::auction_auction auction : this->auctionsQueue)
         {
             std::cout << "Auction name: " << auction.task_name << ", data: " << auction.task_data << std::endl;
         }
     }
 
 
-    void Auction_server::newClientCB(const test_cpp::auction_client& msg)
+    void Auction_server::newClientCB(const bt_project::auction_client& msg)
     {
         this->registeredClients.push_back(msg);
 
 
         std::cout << "Current clients:" << std::endl;
-        for(test_cpp::auction_client client : this->registeredClients)
+        for(bt_project::auction_client client : this->registeredClients)
         {
             std::cout << "name: " << client.name << " ID: " << client.ID << std::endl;
         }
     }
 
 
-    bool sortByElement(const test_cpp::auction_bid& a, const test_cpp::auction_bid& b)
+    bool sortByElement(const bt_project::auction_bid& a, const bt_project::auction_bid& b)
     {
         return (a.price < b.price);
         //return (std::get<1>(a) < std::get<1>(b));
@@ -222,7 +222,7 @@ namespace auction
 
         if (bidsCurrentAuction.size() == 0)
         {
-            for(test_cpp::auction_auction a : currentAuctions) //return all auctions to the queue TODO ?
+            for(bt_project::auction_auction a : currentAuctions) //return all auctions to the queue TODO ?
             {
                 auctionsQueue.push_back(a);
             }
@@ -257,7 +257,7 @@ namespace auction
             if(winners[i] != -1)
             {
                 //publish task for winner
-                test_cpp::auction_winner winner; //TODO, change msg type of winner to {winner_name, winner_ID, etc, auction_auction auction}
+                bt_project::auction_winner winner; //TODO, change msg type of winner to {winner_name, winner_ID, etc, auction_auction auction}
 
                 winner.auction_type = currentAuctions[winners[i]].auction_type;
                 winner.task_name = currentAuctions[winners[i]].task_name;
@@ -290,7 +290,7 @@ namespace auction
         }
         
         //add all remaining auctions back to the queue
-        for(test_cpp::auction_auction a : currentAuctions)
+        for(bt_project::auction_auction a : currentAuctions)
         {
             auctionsQueue.push_back(a);
         }

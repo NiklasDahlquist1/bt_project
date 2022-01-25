@@ -7,12 +7,12 @@
 #include "std_msgs/String.h"
 #include "geometry_msgs/Pose.h"
 
-#include "test_cpp/auction_bid.h"
-#include "test_cpp/auction_auction.h"
-#include "test_cpp/auction_client.h"
-#include "test_cpp/auction_winner.h"
-#include "test_cpp/auction_bidArray.h"
-#include "test_cpp/auction_auctionArray.h"
+#include "bt_project/auction_bid.h"
+#include "bt_project/auction_auction.h"
+#include "bt_project/auction_client.h"
+#include "bt_project/auction_winner.h"
+#include "bt_project/auction_bidArray.h"
+#include "bt_project/auction_auctionArray.h"
 
 #include <vector>
 #include <tuple>
@@ -40,9 +40,9 @@ namespace auction
         //std::vector<std::tuple<std::string, float, std::string>> tasksWon; //task_type, price payed, task_data 
         std::string name;
 
-        test_cpp::auction_auctionArray availableAuction;
+        bt_project::auction_auctionArray availableAuction;
 
-        test_cpp::auction_winner currentTask; // 
+        bt_project::auction_winner currentTask; // 
         bool currentTaskActive = false; //do not bid for new task while working on this
         bool auctionAvailableHasBeenSet = false;
         bool bidSent = false; //check to not spam bids
@@ -56,20 +56,20 @@ namespace auction
         //void registerAsClient();
         void winnerAuctionCB();
         //void returningAuctionCB();
-        virtual double calculateBid(test_cpp::auction_auction auction);
+        virtual double calculateBid(bt_project::auction_auction auction);
         void sendBid(std::vector<double> prices);
         //void checkIfWinner(); // handled in the callback instead
         void clientLogic();
 
 
-        void checkAvailableAuctionCB(const test_cpp::auction_auctionArray& msg);
-        void auctionWinnerCB(const test_cpp::auction_winner& msg);
-        void auctionNotWonCB(const test_cpp::auction_winner& msg);
+        void checkAvailableAuctionCB(const bt_project::auction_auctionArray& msg);
+        void auctionWinnerCB(const bt_project::auction_winner& msg);
+        void auctionNotWonCB(const bt_project::auction_winner& msg);
         void setTaskNotActive(); //call when done with task to look for new task
 
         void sellCurrentTask(); // put current task up for auctioning again, remember to also sets taskActive to false
 
-        test_cpp::auction_winner getCurrentTask();
+        bt_project::auction_winner getCurrentTask();
     };
 
     class Auction_client_mav : public Auction_client
@@ -85,7 +85,7 @@ namespace auction
         //~Auction_client_mav();
 
         void poseCB(const geometry_msgs::Pose& msg);
-        double calculateBid(test_cpp::auction_auction auction);
+        double calculateBid(bt_project::auction_auction auction);
 
         //geometry_msgs::Pose getGoalPose();
     };
@@ -104,7 +104,7 @@ namespace auction
         //~Auction_client_mav();
 
         void poseCB(const geometry_msgs::Pose& msg);
-        double calculateBid(test_cpp::auction_auction auction);
+        double calculateBid(bt_project::auction_auction auction);
     };
 
 
@@ -120,8 +120,8 @@ namespace auction
 
     void Auction_client::sellCurrentTask()
     {
-        test_cpp::auction_auction a;
-        test_cpp::auction_auctionArray ar; //TODO, how to know all original data from won task (min/max price, ??) maybe use same msg type for auction and winner?
+        bt_project::auction_auction a;
+        bt_project::auction_auctionArray ar; //TODO, how to know all original data from won task (min/max price, ??) maybe use same msg type for auction and winner?
 
         a.task_name = this->currentTask.task_name;
         a.task_data = this->currentTask.task_data;
@@ -157,7 +157,7 @@ namespace auction
 
 
 
-    test_cpp::auction_winner Auction_client::getCurrentTask()
+    bt_project::auction_winner Auction_client::getCurrentTask()
     {
         return currentTask;
     }
@@ -169,7 +169,7 @@ namespace auction
 
     void Auction_client::sendBid(std::vector<double> prices)
     {
-        test_cpp::auction_bidArray bids;
+        bt_project::auction_bidArray bids;
 
         bids.name = this->name;
         bids.prices = prices;
@@ -178,7 +178,7 @@ namespace auction
         this->auction_bid_pub.publish(bids);
     }
 
-    double Auction_client::calculateBid(test_cpp::auction_auction auction)
+    double Auction_client::calculateBid(bt_project::auction_auction auction)
     {
         return -1; 
     }
@@ -196,7 +196,7 @@ namespace auction
                 {
                     bool hasCosts = false;
                     std::vector<double> costs;
-                    for(test_cpp::auction_auction auction : availableAuction.auctions)
+                    for(bt_project::auction_auction auction : availableAuction.auctions)
                     {
                         //TODO, add check to make sure that this task is not included in ignore lists
                         if(checkIfIdNotIgnored(auction.auction_ID))
@@ -237,7 +237,7 @@ namespace auction
         }
     }
 
-    void Auction_client::checkAvailableAuctionCB(const test_cpp::auction_auctionArray& msg)
+    void Auction_client::checkAvailableAuctionCB(const bt_project::auction_auctionArray& msg)
     {
         this->availableAuction = msg;
 
@@ -246,7 +246,7 @@ namespace auction
         this->bidSent = false;
     }
 
-    void Auction_client::auctionWinnerCB(const test_cpp::auction_winner& msg)
+    void Auction_client::auctionWinnerCB(const bt_project::auction_winner& msg)
     {
         //check if the name of the winner is the same
         if(this->name == msg.winner_name && this->currentTaskActive == false)
@@ -267,7 +267,7 @@ namespace auction
         }
     }
 
-    void Auction_client::auctionNotWonCB(const test_cpp::auction_winner& msg)
+    void Auction_client::auctionNotWonCB(const bt_project::auction_winner& msg)
     {
         //not used for now, should check if this client created the auction and nobody accepted the task
     }
@@ -277,8 +277,8 @@ namespace auction
     {
         this->name = name;
 
-        this->auction_bid_pub = nodeHandle.advertise<test_cpp::auction_bidArray>("auction_bidArray", 1000);
-        this->auction_taskAvailable_pub = nodeHandle.advertise<test_cpp::auction_auctionArray>("auction_newAuctionArray", 1000);
+        this->auction_bid_pub = nodeHandle.advertise<bt_project::auction_bidArray>("auction_bidArray", 1000);
+        this->auction_taskAvailable_pub = nodeHandle.advertise<bt_project::auction_auctionArray>("auction_newAuctionArray", 1000);
     }
     
     Auction_client::~Auction_client()
@@ -350,7 +350,7 @@ namespace auction
     }*/
 
 
-    double Auction_client_mav::calculateBid(test_cpp::auction_auction auction) 
+    double Auction_client_mav::calculateBid(bt_project::auction_auction auction) 
     {
         if(auction.task_name == "moveTo")
         {
@@ -421,7 +421,7 @@ namespace auction
 
 
 
-    double Auction_client_walker::calculateBid(test_cpp::auction_auction auction) 
+    double Auction_client_walker::calculateBid(bt_project::auction_auction auction) 
     {
         if(auction.task_name == "walkTo") // TODO, implement all these cost functions
         {

@@ -2,8 +2,8 @@
 
 #include <ros/ros.h>
 
-#include "test_cpp/auction_auctionArray.h"
-//#include "test_cpp/auction_auctionArray.h"
+#include "bt_project/auction_auctionArray.h"
+//#include "bt_project/auction_auctionArray.h"
 #include <random>
 
 
@@ -13,7 +13,7 @@ void test_pub_array(int size)
     ros::NodeHandle nodeHandle;
     
     //test publish some random points
-    ros::Publisher pub_moveTo = nodeHandle.advertise<test_cpp::auction_auctionArray>("/auction_newAuctionArray", 1000, true);
+    ros::Publisher pub_moveTo = nodeHandle.advertise<bt_project::auction_auctionArray>("/auction_newAuctionArray", 1000, true);
 
     std::random_device rd;
     std::mt19937 e2(rd());
@@ -28,11 +28,11 @@ void test_pub_array(int size)
 std::cout << "subs: " << pub_moveTo.getNumSubscribers() << std::endl;
 */
 
-    std::vector<test_cpp::auction_auction> arr(size);
-    test_cpp::auction_auctionArray auctionArr;
+    std::vector<bt_project::auction_auction> arr(size);
+    bt_project::auction_auctionArray auctionArr;
     for(int i = 0; i < size; ++i)
     {
-        test_cpp::auction_auction auction;
+        bt_project::auction_auction auction;
         auction.auction_type = "single";
         auction.task_name = "moveTo";
         auction.creator_name = "test";
@@ -74,7 +74,7 @@ void test_pub_Same_point(int size)
     ros::NodeHandle nodeHandle;
     
     //test publish some random points
-    ros::Publisher pub_moveTo = nodeHandle.advertise<test_cpp::auction_auctionArray>("/auction_newAuctionArray", 1000, true);
+    ros::Publisher pub_moveTo = nodeHandle.advertise<bt_project::auction_auctionArray>("/auction_newAuctionArray", 1000, true);
 
 
     std::random_device rd;
@@ -82,11 +82,11 @@ void test_pub_Same_point(int size)
     std::uniform_real_distribution<> dist(0, 1);
 
 
-    std::vector<test_cpp::auction_auction> arr(size);
-    test_cpp::auction_auctionArray auctionArr;
+    std::vector<bt_project::auction_auction> arr(size);
+    bt_project::auction_auctionArray auctionArr;
     for(int i = 0; i < size; ++i)
     {
-        test_cpp::auction_auction auction;
+        bt_project::auction_auction auction;
         auction.auction_type = "single";
         auction.task_name = "moveTo";
         auction.creator_name = "test";
@@ -117,14 +117,14 @@ void test_pub_Same_point(int size)
 void demo()
 {
     ros::NodeHandle nodeHandle;
-    ros::Publisher pub_moveTo = nodeHandle.advertise<test_cpp::auction_auctionArray>("/auction_newAuctionArray", 1000, true);
+    ros::Publisher pub_moveTo = nodeHandle.advertise<bt_project::auction_auctionArray>("/auction_newAuctionArray", 1000, true);
 
     std::random_device rd;
     std::mt19937 e2(rd());
     std::uniform_real_distribution<> dist(0, 1);
 
-    test_cpp::auction_auctionArray auctionArr;
-    test_cpp::auction_auction auction;
+    bt_project::auction_auctionArray auctionArr;
+    bt_project::auction_auction auction;
     auction.auction_type = "single";
     auction.task_name = "moveTo";
     auction.creator_name = "test";
@@ -148,7 +148,7 @@ void demo()
     auctionArr.auctions.push_back(auction);
 
 
-    for(const test_cpp::auction_auction& a : auctionArr.auctions)
+    for(const bt_project::auction_auction& a : auctionArr.auctions)
     {
         std::cout << a.task_data << std::endl;
         //std::cout << a.auction_ID << std::endl;
@@ -166,14 +166,14 @@ void demo()
 void publishGridOfPoints()
 {
     ros::NodeHandle nodeHandle;
-    ros::Publisher pub_moveTo = nodeHandle.advertise<test_cpp::auction_auctionArray>("/auction_newAuctionArray", 1000, true);
+    ros::Publisher pub_moveTo = nodeHandle.advertise<bt_project::auction_auctionArray>("/auction_newAuctionArray", 1000, true);
 
     std::random_device rd;
     std::mt19937 e2(rd());
     std::uniform_real_distribution<> dist(0, 1);
 
-    test_cpp::auction_auctionArray auctionArr;
-    test_cpp::auction_auction auction;
+    bt_project::auction_auctionArray auctionArr;
+    bt_project::auction_auction auction;
     auction.auction_type = "single";
     auction.task_name = "moveTo";
     auction.creator_name = "test";
@@ -223,14 +223,14 @@ void publishGridOfPoints()
 void explore()
 {
     ros::NodeHandle nodeHandle;
-    ros::Publisher pub_moveTo = nodeHandle.advertise<test_cpp::auction_auctionArray>("/auction_newAuctionArray", 1000, true);
+    ros::Publisher pub_moveTo = nodeHandle.advertise<bt_project::auction_auctionArray>("/auction_newAuctionArray", 1000, true);
 
     std::random_device rd;
     std::mt19937 e2(rd());
     std::uniform_real_distribution<> dist(0, 1);
 
-    test_cpp::auction_auctionArray auctionArr;
-    test_cpp::auction_auction auction;
+    bt_project::auction_auctionArray auctionArr;
+    bt_project::auction_auction auction;
     auction.auction_type = "single";
     auction.task_name = "explore";
     auction.creator_name = "test";
@@ -241,7 +241,7 @@ void explore()
 
 
 
-    for(const test_cpp::auction_auction& a : auctionArr.auctions)
+    for(const bt_project::auction_auction& a : auctionArr.auctions)
     {
         std::cout << a.task_data << std::endl;
         //std::cout << a.auction_ID << std::endl;

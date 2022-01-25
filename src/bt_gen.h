@@ -22,7 +22,7 @@
 #include "behaviortree_cpp_v3/loggers/bt_zmq_publisher.h"
 #include "behaviortree_cpp_v3/blackboard.h"
 
-#include "test_cpp/auction_winner.h"
+#include "bt_project/auction_winner.h"
 
 //#include "actions.h"
 
@@ -659,7 +659,7 @@ namespace gen_bt
         //std::cout << stream.str() << std::endl; //print now for testing
     }
 
-    std::string getXMLBasedOnAuction(const std::vector<behavior_test>& available_behaviors, const test_cpp::auction_winner task)
+    std::string getXMLBasedOnAuction(const std::vector<behavior_test>& available_behaviors, const bt_project::auction_winner task)
     {
         std::stringstream stream;
 
@@ -840,7 +840,7 @@ namespace gen_bt
     }
 
 
-    void loadNewBT(BT::Tree& btTree, BT::BehaviorTreeFactory& factory, const test_cpp::auction_winner task)
+    void loadNewBT(BT::Tree& btTree, BT::BehaviorTreeFactory& factory, const bt_project::auction_winner task)
     {
         //TODO, maybe allways call xml function? maybe pass NodeBT to the generation function and just add the task aprt
         if(task.task_name == "moveTo")

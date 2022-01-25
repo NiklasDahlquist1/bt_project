@@ -15,7 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   test_action
   message_generation
 
-  test_cpp # remove later TODO
+  #test_cpp # remove later TODO
 )
 
 ## System dependencies are found with CMake's conventions
@@ -52,11 +52,19 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
+ add_message_files(
+   FILES
+   auction_auction.msg
+   auction_bid.msg
+   auction_client.msg
+   auction_winner.msg
+   auction_auctionArray.msg
+   auction_bidArray.msg
+   obstacle_point.msg
+   obstacle_points.msg
 #   Message1.msg
 #   Message2.msg
-# )
+ )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -73,10 +81,11 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs  # Or other packages containing msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   geometry_msgs
+   std_msgs  # Or other packages containing msgs
+ )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -227,11 +236,11 @@ LINK_DIRECTORIES(ortools/lib)
 #target_link_libraries(test_or ${catkin_LIBRARIES} ortools)
 
 add_executable(auction_server src/auction_server.cpp)
-#add_dependencies(auction_server ${${PROJECT_NAME}_EXPORTED_TARGETS})
+add_dependencies(auction_server ${${PROJECT_NAME}_EXPORTED_TARGETS})
 target_link_libraries(auction_server ${catkin_LIBRARIES} ortools)
 
 add_executable(client src/client.cpp)
-#add_dependencies(client ${${PROJECT_NAME}_EXPORTED_TARGETS})
+add_dependencies(client ${${PROJECT_NAME}_EXPORTED_TARGETS})
 target_link_libraries(client ${catkin_LIBRARIES})
 
 
@@ -242,16 +251,16 @@ target_link_libraries(client ${catkin_LIBRARIES})
 
 
 add_executable(obstacles src/obstacles.cpp)
-#add_dependencies(obstacles ${${PROJECT_NAME}_EXPORTED_TARGETS})
+add_dependencies(obstacles ${${PROJECT_NAME}_EXPORTED_TARGETS})
 target_link_libraries(obstacles ${catkin_LIBRARIES})
 
 add_executable(publishPoints src/publishPoints.cpp)
-#add_dependencies(publishPoints ${${PROJECT_NAME}_EXPORTED_TARGETS})
+add_dependencies(publishPoints ${${PROJECT_NAME}_EXPORTED_TARGETS})
 target_link_libraries(publishPoints ${catkin_LIBRARIES})
 
 
 add_executable(client_singleTree src/client_single_BT.cpp)
-#add_dependencies(client_singleTree ${${PROJECT_NAME}_EXPORTED_TARGETS})
+add_dependencies(client_singleTree ${${PROJECT_NAME}_EXPORTED_TARGETS})
 target_link_libraries(client_singleTree ${catkin_LIBRARIES})
 
 

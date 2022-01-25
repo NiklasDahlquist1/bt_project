@@ -5,8 +5,8 @@
 #include "geometry_msgs/Point.h"
 #include "geometry_msgs/Vector3.h"
 #include "tf/LinearMath/Vector3.h"
-#include "test_cpp/obstacle_point.h"
-#include "test_cpp/obstacle_points.h"
+#include "bt_project/obstacle_point.h"
+#include "bt_project/obstacle_points.h"
 
 
 
@@ -35,7 +35,7 @@ namespace obstacle_avoidance
     };*/
 
 
-    tf::Vector3 getFieldFromPoints(const std::vector<test_cpp::obstacle_point>& obstacles, const tf::Vector3& point) 
+    tf::Vector3 getFieldFromPoints(const std::vector<bt_project::obstacle_point>& obstacles, const tf::Vector3& point) 
     {
         tf::Vector3 field;
         field.setX(0);
@@ -51,7 +51,7 @@ namespace obstacle_avoidance
         tf::Vector3 diff;
         double dist;
         double value;
-        for(test_cpp::obstacle_point obs : obstacles)
+        for(bt_project::obstacle_point obs : obstacles)
         {
             obstacle.setX(obs.pos.x);
             obstacle.setY(obs.pos.y);

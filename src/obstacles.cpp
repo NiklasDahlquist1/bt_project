@@ -7,7 +7,7 @@
 
 #include "nav_msgs/Odometry.h"
 
-std::vector<test_cpp::obstacle_point> obstaclePositions(5);
+std::vector<bt_project::obstacle_point> obstaclePositions(5);
 
 
 void updateObstacle1(const nav_msgs::Odometry& msg)
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
     ros::NodeHandle nodeHandle;
     ros::Rate loop_rate(100);
 
-    for(test_cpp::obstacle_point& p : obstaclePositions)
+    for(bt_project::obstacle_point& p : obstaclePositions)
     {
         p.pos.x = -MAXFLOAT; // init to a pos far away, to not collide if UAV does not exist
         p.min_distance = 0.33;
@@ -68,7 +68,7 @@ int main(int argc, char **argv)
     }
 
     //test obstacle
-    /*test_cpp::obstacle_point p;
+    /*bt_project::obstacle_point p;
     p.pos.x = 0;
     p.pos.y = 0;
     p.pos.z = 1;
@@ -95,9 +95,9 @@ int main(int argc, char **argv)
     ros::Subscriber sub_mav5 = nodeHandle.subscribe("odometry_UAV_5", 1000, updateObstacle5);
 
 
-    ros::Publisher pub_obstacles = nodeHandle.advertise<test_cpp::obstacle_points>("obstacles_points", 1000);
+    ros::Publisher pub_obstacles = nodeHandle.advertise<bt_project::obstacle_points>("obstacles_points", 1000);
 
-    test_cpp::obstacle_points msg;
+    bt_project::obstacle_points msg;
 
     while(ros::ok())
     {

@@ -24,15 +24,15 @@
 auction::Auction_client_mav* auction_client_ptr;
 
 // callbacks        
-void checkAvailableAuctionCB(const test_cpp::auction_auctionArray& msg)
+void checkAvailableAuctionCB(const bt_project::auction_auctionArray& msg)
 {
     auction_client_ptr->checkAvailableAuctionCB(msg);
 }
-void AuctionWinnerCB(const test_cpp::auction_winner& msg)
+void AuctionWinnerCB(const bt_project::auction_winner& msg)
 {
     auction_client_ptr->auctionWinnerCB(msg);
 }
-void AuctionNotWonCB(const test_cpp::auction_winner& msg)
+void AuctionNotWonCB(const bt_project::auction_winner& msg)
 {
     //not used for now, should check if this client created the auction and nobody accepted the task
     auction_client_ptr->auctionNotWonCB(msg);
@@ -72,8 +72,8 @@ int main(int argc, char **argv)
 
     
     // just for plotting now
-    ros::Publisher task_aborted = nodeHandle.advertise<test_cpp::auction_winner>("plot/task_aborted", 100);
-    ros::Publisher task_succeeded = nodeHandle.advertise<test_cpp::auction_winner>("plot/task_succeeded", 100);
+    ros::Publisher task_aborted = nodeHandle.advertise<bt_project::auction_winner>("plot/task_aborted", 100);
+    ros::Publisher task_succeeded = nodeHandle.advertise<bt_project::auction_winner>("plot/task_succeeded", 100);
 
 
     ROS_INFO_STREAM("INIT CLIENT " << ros::this_node::getName());
@@ -143,7 +143,7 @@ int main(int argc, char **argv)
 
 
     // load tree
-    test_cpp::auction_winner task;
+    bt_project::auction_winner task;
     task.task_name = task_name;
     task.task_data = task_data;
     //gen_bt::loadNewBT(tree, factory, task);
