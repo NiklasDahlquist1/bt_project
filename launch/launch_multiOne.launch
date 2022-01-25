@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="world_name" default="basic"/>
+  <arg name="enable_logging" default="false"/>
+  <arg name="enable_ground_truth" default="true"/>
+  <arg name="mav_name" default="firefly" />
+
+  <env name="GAZEBO_MODEL_PATH" value="${GAZEBO_MODEL_PATH}:$(find rotors_gazebo)/models"/>
+  <env name="GAZEBO_RESOURCE_PATH" value="${GAZEBO_RESOURCE_PATH}:$(find rotors_gazebo)/models"/>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find rotors_gazebo)/worlds/$(arg world_name).world"/>
+    <!-- <arg name="debug" value="true"/> -->
+    <arg name="paused" value="false"/>
+    <!-- <arg name="gui" value="false"/> -->
+  </include>
+
+  <group ns="$(arg mav_name)1">
+    <include file="$(find rotors_gazebo)/launch/spawn_mav.launch">
+      <arg name="mav_name" value="$(arg mav_name)" />
+      <arg name="namespace" value="$(arg mav_name)1" />
+      <arg name="model" value="$(find rotors_description)/urdf/mav_generic_odometry_sensor.gazebo" />
+      <arg name="enable_logging" value="$(arg enable_logging)" />
+      <arg name="enable_ground_truth" value="$(arg enable_ground_truth)" />
+      <arg name="log_file" value="$(arg mav_name)1"/>
+      <arg name="x" value="1.5"/>
+      <arg name="y" value="0.0"/>
+    </include>
+    <node name="lee_position_controller_node" pkg="rotors_control" type="lee_position_controller_node" output="screen">
+      <rosparam command="load" file="$(find rotors_gazebo)/resource/lee_controller_$(arg mav_name).yaml" />
+      <rosparam command="load" file="$(find rotors_gazebo)/resource/$(arg mav_name).yaml" />
+      <remap from="odometry" to="odometry_sensor1/odometry" />
+    </node>
+<!--    <node name="waypoint_publisher" pkg="rotors_gazebo" type="waypoint_publisher" output="screen" args="0 -1 1 0 2"/> -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  </group>
+
+
+
+
+
+
+  <!-- Launch one action server for each mav -->
+
+  <node name="mav_moveto_action1" pkg="test_action" type="moveto_server">
+    <remap from="pose" to="firefly1/odometry_sensor1/pose" />
+    <remap from="goalPose" to="firefly1/command/pose" />
+  </node>
+
+
+
+  <node name="obs_points" pkg="bt_project" type="obstacles">
+    <remap from="odometry_UAV_1" to="/firefly1/odometry_sensor1/odometry"/>
+    <remap from="odometry_UAV_2" to="/firefly2/odometry_sensor1/odometry"/>
+    <remap from="odometry_UAV_3" to="/firefly3/odometry_sensor1/odometry"/>
+    <remap from="odometry_UAV_4" to="/firefly4/odometry_sensor1/odometry"/>
+    <remap from="odometry_UAV_5" to="/firefly5/odometry_sensor1/odometry"/>
+  </node>
+
+
+
+
+
+  <node name="auction_server" pkg="bt_project" type="auction_server" output="screen">
+    <rosparam param="auction_timeout">6.0</rosparam>
+    <rosparam param="bids_threshold">1</rosparam>
+  </node>
+
+
+  <node name="uav_client_1" pkg="bt_project" type="client" output="screen">
+    <remap from="odometry" to="firefly1/odometry_sensor1/odometry" />
+    <remap from="uavGoal" to="firefly1/command/pose"/>
+    <remap from="motor_fail" to="uav_clinet_1/motor_fail"/>
+
+    <remap from="mav_moveto_action/cancel" to="mav_moveto_action1/cancel" />
+    <remap from="mav_moveto_action/feedback" to="mav_moveto_action1/feedback" />
+    <remap from="mav_moveto_action/goal" to="mav_moveto_action1/goal" />
+    <remap from="mav_moveto_action/result" to="mav_moveto_action1/result" />
+    <remap from="mav_moveto_action/status" to="mav_moveto_action1/status" /> 
+  </node>
+
+
+</launch>

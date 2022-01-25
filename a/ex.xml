@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!-- ////////// -->
+<root main_tree_to_execute="BehaviorTree">
+<BehaviorTree ID="BehaviorTree">
+    <ReactiveSequence>
+        <Action ID="SafetyChecks">
+        </Action>
+        <Action ID="CheckTaskFailUAVAtPoint">
+        </Action>
+        <ReactiveFallback>
+            <Action ID="UAVAtPoint" point="-2.757288;4.251820;1.907708">
+            </Action>
+            <ReactiveSequence>
+                <ReactiveFallback>
+                    <Action ID="HasCollisionFreeWP">
+                    </Action>
+                    <ReactiveSequence>
+                        <ReactiveFallback>
+                            <Action ID="IsFlying">
+                            </Action>
+                            <Action ID="TakeOff">
+                            </Action>
+                        </ReactiveFallback>
+                        <Action ID="GetPointFromPotentialField" goalPose="{goalPose}">
+                        </Action>
+                    </ReactiveSequence>
+                </ReactiveFallback>
+                <Action ID="PublishUAVWayPoint" goalPose="{goalPose}">
+                </Action>
+            </ReactiveSequence>
+        </ReactiveFallback>
+    </ReactiveSequence>
+</BehaviorTree>
+<!-- ////////// -->
+<TreeNodesModel>
+    <BehaviorTree ID="BehaviorTree">
+    </BehaviorTree>
+    <Action ID="SafetyChecks">
+    </Action>
+    <Action ID="CheckTaskFailUAVAtPoint">
+    </Action>
+    <Action ID="UAVAtPoint">
+        <input_port name="point">
+        </input_port>
+    </Action>
+    <Action ID="HasCollisionFreeWP">
+    </Action>
+    <Action ID="IsFlying">
+    </Action>
+    <Action ID="TakeOff">
+    </Action>
+    <Action ID="GetPointFromPotentialField">
+        <output_port name="goalPose">
+        </output_port>
+    </Action>
+    <Action ID="PublishUAVWayPoint">
+        <input_port name="goalPose">
+        </input_port>
+    </Action>
+</TreeNodesModel>
+<!-- ////////// -->
+</root>
+
