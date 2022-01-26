@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<launch>
+<!-- One UAV, auction server -->
+
+
+
+
+
+<!-- run vicon node -->
+  <include file="$(find ros_viconstream)/launch/vicon.launch">
+  <!--<arg name="mav_name" default=""/>
+  <arg name="namespace" default=""/> -->
+  </include>
+
+
+<!-- start crazy flie controllers -->
+  <node name="controller" pkg="bt_project" type="crazyflie_controller.py" output="screen">
+    <remap from="odom" to="odom?"/>
+    <remap from="reference" to="goalPose?"/>
+    <remap from="cmd_vel" to="crazyflie_cmd_vel?"/>
+  </node>
+
+
+
+
+
+
+<!-- for the potential field, max 5 uavs -->
+  <node name="obs_points" pkg="bt_project" type="obstacles">
+    <remap from="odometry_UAV_1" to="odom1?"/>
+    <remap from="odometry_UAV_2" to="odom2?"/>
+    <remap from="odometry_UAV_3" to="odom3?"/>
+    <remap from="odometry_UAV_4" to="odom4?"/>
+    <remap from="odometry_UAV_5" to="odom5?"/>
+  </node>
+
+
+
+  <!-- Launch one action server for each mav -->
+  <node name="mav_moveto_action1" pkg="test_action" type="moveto_server">
+    <remap from="odometry" to="odom?" />
+    <remap from="goalPose" to="goalPose?" />
+  </node>
+
+
+
+
+
+
+  <node name="auction_server" pkg="bt_project" type="auction_server" output="screen">
+    <rosparam param="auction_timeout">6.0</rosparam>
+    <rosparam param="bids_threshold">1</rosparam>
+  </node>
+
+
+  <node name="uav_client_1" pkg="bt_project" type="client" output="screen">
+    <remap from="odometry" to="odom?" />
+    <remap from="uavGoal" to="goalPose?"/>
+    <remap from="motor_fail" to="uav_clinet_1/motor_fail"/>
+
+    <remap from="mav_moveto_action/cancel" to="mav_moveto_action1/cancel" />
+    <remap from="mav_moveto_action/feedback" to="mav_moveto_action1/feedback" />
+    <remap from="mav_moveto_action/goal" to="mav_moveto_action1/goal" />
+    <remap from="mav_moveto_action/result" to="mav_moveto_action1/result" />
+    <remap from="mav_moveto_action/status" to="mav_moveto_action1/status" /> 
+  </node>
+
+
+
+
+</launch>

@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<launch>
+
+<!-- Test single task, maybe moveTo -->
+
+
+
+
+<!-- run vicon nodes -->
+  <include file="$(find ros_viconstream)/launch/vicon.launch">
+  <!--<arg name="mav_name" default=""/>
+  <arg name="namespace" default=""/> -->
+  </include>
+
+
+<!-- start crazy flie controllers -->
+  <node name="controller" pkg="bt_project" type="crazyflie_controller.py" output="screen">
+    <remap from="odom" to="odom?"/>
+    <remap from="reference" to="goalPose?"/>
+    <remap from="cmd_vel" to="crazyflie_cmd_vel?"/>
+  </node>
+
+
+
+
+<!-- for the potential field, max 5 uavs -->
+  <node name="obs_points" pkg="bt_project" type="obstacles">
+    <remap from="odometry_UAV_1" to="/firefly1/odometry_sensor1/odometry"/>
+    <remap from="odometry_UAV_2" to="/firefly2/odometry_sensor1/odometry"/>
+    <remap from="odometry_UAV_3" to="/firefly3/odometry_sensor1/odometry"/>
+    <remap from="odometry_UAV_4" to="/firefly4/odometry_sensor1/odometry"/>
+    <remap from="odometry_UAV_5" to="/firefly5/odometry_sensor1/odometry"/>
+  </node>
+
+
+
+
+  <!-- Launch one action server for each mav -->
+
+  <node name="mav_moveto_action1" pkg="test_action" type="moveto_server">
+    <remap from="odometry" to="odom?" />
+    <remap from="goalPose" to="goalPose?" />
+  </node>
+
+
+
+
+
+
+<!-- Dont launch auction server in this case --> 
+<!--  <node name="auction_server" pkg="bt_project" type="auction_server" output="screen">
+    <rosparam param="auction_timeout">6.0</rosparam>
+    <rosparam param="bids_threshold">5</rosparam>
+  </node>
+-->
+
+
+  <node name="uav_client_1" pkg="bt_project" type="client_singleTree" output="screen">
+
+    <rosparam param="behavior_available">behavior_available.csv</rosparam>
+    <rosparam param="behavior_definition">behavior_definition.csv</rosparam>
+    <rosparam param="task_name">moveTo</rosparam> <!-- moveTo explore land -->
+    <rosparam param="task_data">0;0;1</rosparam> <!-- -5;0;2;0;0;0;1 -5;0;2;30 0;0;2 -->
+
+    <remap from="odometry" to="odom?" />
+    <remap from="uavGoal" to="goalPose?"/>
+
+    <remap from="mav_moveto_action/cancel" to="mav_moveto_action1/cancel" />
+    <remap from="mav_moveto_action/feedback" to="mav_moveto_action1/feedback" />
+    <remap from="mav_moveto_action/goal" to="mav_moveto_action1/goal" />
+    <remap from="mav_moveto_action/result" to="mav_moveto_action1/result" />
+    <remap from="mav_moveto_action/status" to="mav_moveto_action1/status" /> 
+  </node>
+
+
+</launch>

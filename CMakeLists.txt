@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   geometry_msgs
+  nav_msgs
   behaviortree_cpp_v3
   test_action
   message_generation
@@ -179,6 +180,7 @@ include_directories(
  catkin_install_python(PROGRAMS
 #   scripts/my_python_script
    scripts/plot.py
+   scripts/crazyflie_controller.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 
