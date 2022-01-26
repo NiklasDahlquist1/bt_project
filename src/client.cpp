@@ -255,7 +255,7 @@ int main(int argc, char **argv)
             {
                 status = tree_noTask.tickRoot(); 
 
-                if(status == NodeStatus::SUCCESS) // stop BT after completion??
+                if(status == BT::NodeStatus::SUCCESS) // stop BT after completion??
                 {
                     //runningNoTaskBT = false;
                 }

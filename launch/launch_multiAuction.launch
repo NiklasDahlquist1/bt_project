@@ -139,27 +139,27 @@
   <!-- Launch one action server for each mav -->
 
   <node name="mav_moveto_action1" pkg="test_action" type="moveto_server">
-    <remap from="pose" to="firefly1/odometry_sensor1/pose" />
+    <remap from="odometry" to="firefly1/odometry_sensor1/odometry" />
     <remap from="goalPose" to="firefly1/command/pose" />
   </node>
 
   <node name="mav_moveto_action2" pkg="test_action" type="moveto_server">
-    <remap from="pose" to="firefly2/odometry_sensor1/pose" />
+    <remap from="odometry" to="firefly2/odometry_sensor1/odometry" />
     <remap from="goalPose" to="firefly2/command/pose" />
   </node>
 
   <node name="mav_moveto_action3" pkg="test_action" type="moveto_server">
-    <remap from="pose" to="firefly3/odometry_sensor1/pose" />
+    <remap from="odometry" to="firefly3/odometry_sensor1/odometry" />
     <remap from="goalPose" to="firefly3/command/pose" />
   </node>
 
   <node name="mav_moveto_action4" pkg="test_action" type="moveto_server">
-    <remap from="pose" to="firefly4/odometry_sensor1/pose" />
+    <remap from="odometry" to="firefly4/odometry_sensor1/odometry" />
     <remap from="goalPose" to="firefly4/command/pose" />
   </node>
 
   <node name="mav_moveto_action5" pkg="test_action" type="moveto_server">
-    <remap from="pose" to="firefly5/odometry_sensor1/pose" />
+    <remap from="odometry" to="firefly5/odometry_sensor1/odometry" />
     <remap from="goalPose" to="firefly5/command/pose" />
   </node>
 

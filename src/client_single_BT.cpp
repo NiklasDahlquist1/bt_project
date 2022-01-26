@@ -5,7 +5,8 @@
 #include "bt_gen_new.h"
 
 
-#include "actions.h"
+#include "behaviors.h"
+//#include "actions.h"
 //#include "bt_gen.h"
 #include <ros/package.h>
 
@@ -38,10 +39,11 @@ void AuctionNotWonCB(const bt_project::auction_winner& msg)
     auction_client_ptr->auctionNotWonCB(msg);
 }
 
-void mavPoseCB(const geometry_msgs::Pose& msg)
+void mavPoseCB(const nav_msgs::Odometry& msg)
 {
-    auction_client_ptr->poseCB(msg);
+    auction_client_ptr->poseCB(msg.pose.pose);
 }
+
 
 
 
@@ -68,7 +70,7 @@ int main(int argc, char **argv)
     ros::Subscriber sub_availableAuction = nodeHandle.subscribe("/auction_available", 1000, checkAvailableAuctionCB);
     ros::Subscriber sub_newClient = nodeHandle.subscribe("/auction_winner", 1000, AuctionWinnerCB);    
     ros::Subscriber sub_newAuction = nodeHandle.subscribe("/auction_return", 1000, AuctionNotWonCB);
-    ros::Subscriber sub_pose = nodeHandle.subscribe("/pose", 1000, mavPoseCB);
+    ros::Subscriber sub_pose = nodeHandle.subscribe("/odometry", 1000, mavPoseCB);
 
     
     // just for plotting now
@@ -122,7 +124,7 @@ int main(int argc, char **argv)
     state.nodeHandle = nodeHandle;
 
     bt_state::initMAVStateCBPtr(state);
-    ros::Subscriber sub_state_pose = nodeHandle.subscribe("/pose", 1000, bt_state::mavPoseCB);
+    ros::Subscriber sub_state_pose = nodeHandle.subscribe("/odometry", 1000, bt_state::mavPoseCB);
     ros::Subscriber sub_state_obstacle_points = nodeHandle.subscribe("/obstacles_points", 1000, bt_state::obstaclePointsCB);
 
 
@@ -173,7 +175,7 @@ int main(int argc, char **argv)
     //BT::printTreeRecursively(tree.rootNode());
 
 
-    PublisherZMQ publisher_zmq(tree);
+    BT::PublisherZMQ publisher_zmq(tree);
 
 
 

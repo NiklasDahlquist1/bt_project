@@ -44,7 +44,7 @@
   <!-- Launch one action server for each mav -->
 
   <node name="mav_moveto_action1" pkg="test_action" type="moveto_server">
-    <remap from="pose" to="firefly1/odometry_sensor1/pose" />
+    <remap from="odometry" to="firefly1/odometry_sensor1/odometry" />
     <remap from="goalPose" to="firefly1/command/pose" />
   </node>
 

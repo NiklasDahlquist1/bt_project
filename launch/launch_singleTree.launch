@@ -44,7 +44,7 @@
   <!-- Launch one action server for each mav -->
 
   <node name="mav_moveto_action1" pkg="test_action" type="moveto_server">
-    <remap from="pose" to="firefly1/odometry_sensor1/pose" />
+    <remap from="odometry" to="firefly1/odometry_sensor1/odometry" />
     <remap from="goalPose" to="firefly1/command/pose" />
   </node>
 
@@ -52,7 +52,13 @@
 
 
 
+
   <node name="obs_points" pkg="bt_project" type="obstacles">
+    <remap from="odometry_UAV_1" to="/firefly1/odometry_sensor1/odometry"/>
+    <remap from="odometry_UAV_2" to="/firefly2/odometry_sensor1/odometry"/>
+    <remap from="odometry_UAV_3" to="/firefly3/odometry_sensor1/odometry"/>
+    <remap from="odometry_UAV_4" to="/firefly4/odometry_sensor1/odometry"/>
+    <remap from="odometry_UAV_5" to="/firefly5/odometry_sensor1/odometry"/>
   </node>
 
 
@@ -72,9 +78,9 @@
     <rosparam param="behavior_available">behavior_available.csv</rosparam>
     <rosparam param="behavior_definition">behavior_definition.csv</rosparam>
     <rosparam param="task_name">land</rosparam> <!-- moveTo explore -->
-    <rosparam param="task_data">0;3;0.1;30</rosparam> <!-- -5;0;2;0;0;0;1 -5;0;2 -->
+    <rosparam param="task_data">-5;0;0.1</rosparam> <!-- -5;0;2;0;0;0;1 -5;0;2 -->
 
-    <remap from="pose" to="firefly1/odometry_sensor1/pose" />
+    <remap from="odometry" to="firefly1/odometry_sensor1/odometry" />
     <remap from="uavGoal" to="firefly1/command/pose"/>
 
     <remap from="mav_moveto_action/cancel" to="mav_moveto_action1/cancel" />

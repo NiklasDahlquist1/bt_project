@@ -1501,6 +1501,89 @@ namespace BT
 
 */
 
+
+
+
+
+
+
+
+// Template specialization to convert.
+namespace BT
+{
+
+    template <> inline geometry_msgs::Pose convertFromString(StringView str)
+    {
+        // The next line should be removed...
+        //printf("Converting string: \"%s\"\n", str.data() );
+
+        // We expect real numbers separated by semicolons
+        auto parts = splitString(str, ';');
+        if (parts.size() != 7)
+        {
+            throw RuntimeError("invalid input)");
+        }
+        else{
+            geometry_msgs::Pose output;
+            output.position.x    = convertFromString<double>(parts[0]);
+            output.position.y    = convertFromString<double>(parts[1]);
+            output.position.z    = convertFromString<double>(parts[2]);
+            output.orientation.x = convertFromString<double>(parts[3]);
+            output.orientation.y = convertFromString<double>(parts[4]);
+            output.orientation.z = convertFromString<double>(parts[5]);
+            output.orientation.w = convertFromString<double>(parts[6]);
+            return output;
+        }
+    }
+
+    template <> inline geometry_msgs::Point convertFromString(StringView str)
+    {
+        // The next line should be removed...
+        //printf("Converting string: \"%s\"\n", str.data() );
+
+        // We expect real numbers separated by semicolons
+        auto parts = splitString(str, ';');
+        if (parts.size() != 3)
+        {
+            throw RuntimeError("invalid input)");
+        }
+        else{
+            geometry_msgs::Point output;
+            output.x = convertFromString<double>(parts[0]);
+            output.y = convertFromString<double>(parts[1]);
+            output.z = convertFromString<double>(parts[2]);
+            return output;
+        }
+    }
+
+
+    template <> inline bool convertFromString(StringView str)
+    {
+        bool output;
+        if (str == "true")
+        {
+            output = true;
+        }
+        else if (str == "false")
+        {
+            output = false;
+        }
+        else
+        {
+            throw RuntimeError("invalid input)");
+        }
+
+        return output;
+    }
+} // end namespace BT
+
+
+
+
+
+
+
+
 #endif
 
 
