@@ -2,7 +2,7 @@
 
 import rospy
 from geometry_msgs.msg import Pose
-from test_cpp.msg import auction_winner
+from bt_project.msg import auction_winner
 
 from geometry_msgs.msg import Point
 
@@ -110,9 +110,9 @@ def logic():
 
     #rate = rospy.Rate(1.0 / 2)
     #rate.sleep()
-    #input("Press Enter to continue...") # requires python3... 
-    raw_input("Press Enter to continue...")
-
+    input("Press Enter to continue...") # requires python3... 
+    #raw_input("Press Enter to continue...") # python2
+ 
 
 
 
