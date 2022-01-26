@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 <launch>
 
+<!-- Activate save to rosbag -->
+<!--  <include file="$(find bt_project)/launch/save_to_rosbag.launch"/>
+-->
+
+
+
+
   <arg name="world_name" default="basic"/>
   <arg name="enable_logging" default="false"/>
   <arg name="enable_ground_truth" default="true"/>

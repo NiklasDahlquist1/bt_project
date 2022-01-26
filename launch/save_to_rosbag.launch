@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<launch>
+
+
+
+  <node pkg="rosbag" type="record" name="rosbag_record_hrpsys" args="firefly1/odometry_sensor1/odometry 
+firefly2/odometry_sensor1/odometry 
+firefly3/odometry_sensor1/odometry 
+firefly4/odometry_sensor1/odometry 
+firefly5/odometry_sensor1/odometry
+/clock
+
+/auction_winner
+/auction_return
+/auction_newAuctionArray
+/auction_newAuction
+/auction_bidArray
+/auction_available
+
+
+/plot/explore_cancel
+/plot/explore_goal
+/plot/task_aborted
+/plot/task_succeeded
+
+/uav_clinet_1/motor_fail
+/uav_clinet_2/motor_fail
+/uav_clinet_3/motor_fail
+/uav_clinet_4/motor_fail
+/uav_clinet_5/motor_fail"
+       if="true" />
+
+</launch>

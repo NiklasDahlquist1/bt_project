@@ -2,6 +2,7 @@
 
 import rospy
 from geometry_msgs.msg import Pose
+from nav_msgs.msg import Odometry
 from bt_project.msg import auction_winner
 
 from geometry_msgs.msg import Point
@@ -33,29 +34,29 @@ explore_cancel_points = []
 
 
 def curve_0_CB(data):
-    curves_x[0].append(data.position.x)
-    curves_y[0].append(data.position.y)
-    curves_z[0].append(data.position.z)
+    curves_x[0].append(data.pose.pose.position.x)
+    curves_y[0].append(data.pose.pose.position.y)
+    curves_z[0].append(data.pose.pose.position.z)
 
 def curve_1_CB(data):
-    curves_x[1].append(data.position.x)
-    curves_y[1].append(data.position.y)
-    curves_z[1].append(data.position.z)
+    curves_x[1].append(data.pose.pose.position.x)
+    curves_y[1].append(data.pose.pose.position.y)
+    curves_z[1].append(data.pose.pose.position.z)
 
 def curve_2_CB(data):
-    curves_x[2].append(data.position.x)
-    curves_y[2].append(data.position.y)
-    curves_z[2].append(data.position.z)
+    curves_x[2].append(data.pose.pose.position.x)
+    curves_y[2].append(data.pose.pose.position.y)
+    curves_z[2].append(data.pose.pose.position.z)
 
 def curve_3_CB(data):
-    curves_x[3].append(data.position.x)
-    curves_y[3].append(data.position.y)
-    curves_z[3].append(data.position.z)
+    curves_x[3].append(data.pose.pose.position.x)
+    curves_y[3].append(data.pose.pose.position.y)
+    curves_z[3].append(data.pose.pose.position.z)
 
 def curve_4_CB(data):
-    curves_x[4].append(data.position.x)
-    curves_y[4].append(data.position.y)
-    curves_z[4].append(data.position.z)
+    curves_x[4].append(data.pose.pose.position.x)
+    curves_y[4].append(data.pose.pose.position.y)
+    curves_z[4].append(data.pose.pose.position.z)
 
 def auction_winner_CB(data):
     if (data.task_name == "moveTo"):
@@ -90,11 +91,11 @@ def logic():
 
 
     # setup subscribers
-    rospy.Subscriber("firefly1/odometry_sensor1/pose", Pose, curve_0_CB)
-    rospy.Subscriber("firefly2/odometry_sensor1/pose", Pose, curve_1_CB)
-    rospy.Subscriber("firefly3/odometry_sensor1/pose", Pose, curve_2_CB)
-    rospy.Subscriber("firefly4/odometry_sensor1/pose", Pose, curve_3_CB)
-    rospy.Subscriber("firefly5/odometry_sensor1/pose", Pose, curve_4_CB)
+    rospy.Subscriber("firefly1/odometry_sensor1/odometry", Odometry, curve_0_CB)
+    rospy.Subscriber("firefly2/odometry_sensor1/odometry", Odometry, curve_1_CB)
+    rospy.Subscriber("firefly3/odometry_sensor1/odometry", Odometry, curve_2_CB)
+    rospy.Subscriber("firefly4/odometry_sensor1/odometry", Odometry, curve_3_CB)
+    rospy.Subscriber("firefly5/odometry_sensor1/odometry", Odometry, curve_4_CB)
 
     #rospy.Subscriber("auction_winner", auction_winner, auction_winner_CB)
 
@@ -110,8 +111,8 @@ def logic():
 
     #rate = rospy.Rate(1.0 / 2)
     #rate.sleep()
-    input("Press Enter to continue...") # requires python3... 
-    #raw_input("Press Enter to continue...") # python2
+    #input("Press Enter to continue...") # requires python3... 
+    raw_input("Press Enter to continue...") # python2
  
 
 

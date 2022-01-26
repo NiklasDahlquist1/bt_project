@@ -5,6 +5,9 @@
 
 
 
+<!-- Activate save to rosbag -->
+  <include file="$(find bt_project)/launch/save_to_rosbag.launch"/>
+
 
 <!-- run vicon nodes -->
   <include file="$(find ros_viconstream)/launch/vicon.launch">

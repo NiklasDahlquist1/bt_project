@@ -12,5 +12,7 @@
     <remap from="cmd_vel" to="crazyflie_cmd_vel?"/>
   </node>
 
+  <node pkg="rosbag" type="record" name="rosbag_record_hrpsys" args="firefly1/odometry_sensor1/odometry firefly2/odometry_sensor1/odometry firefly3/odometry_sensor1/odometry firefly4/odometry_sensor1/odometry firefly5/odometry_sensor1/odometry"
+       if="true" />
 
 </launch>
