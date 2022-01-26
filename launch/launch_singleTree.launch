@@ -77,8 +77,8 @@
 
     <rosparam param="behavior_available">behavior_available.csv</rosparam>
     <rosparam param="behavior_definition">behavior_definition.csv</rosparam>
-    <rosparam param="task_name">land</rosparam> <!-- moveTo explore -->
-    <rosparam param="task_data">-5;0;0.1</rosparam> <!-- -5;0;2;0;0;0;1 -5;0;2 -->
+    <rosparam param="task_name">moveTo</rosparam> <!-- moveTo explore -->
+    <rosparam param="task_data">-5;0;2;0;0;0;1</rosparam> <!-- -5;0;2;0;0;0;1 -5;0;2;30 -5;0;0.1 -->
 
     <remap from="odometry" to="firefly1/odometry_sensor1/odometry" />
     <remap from="uavGoal" to="firefly1/command/pose"/>

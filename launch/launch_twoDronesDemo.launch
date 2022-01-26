@@ -97,7 +97,7 @@
 
   <node name="auction_server" pkg="bt_project" type="auction_server" output="screen">
     <rosparam param="auction_timeout">6.0</rosparam>
-    <rosparam param="bids_threshold">5</rosparam>
+    <rosparam param="bids_threshold">2</rosparam>
   </node>
 
 

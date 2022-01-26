@@ -48,6 +48,8 @@ namespace bt_state
         // for plotting
         ros::Publisher pub_goal_plot;
         ros::Publisher pub_cancel_explore;
+
+        ros::Publisher pub_motor_failed_point;
     };
 
 
@@ -89,6 +91,11 @@ namespace bt_state
     void motorFailCB(const std_msgs::Bool msg)
     {
         statePtr->motorFail = msg.data;
+
+        if(statePtr->motorFail == true)
+        {
+            statePtr->pub_motor_failed_point.publish(statePtr->mavPose.position);
+        }
     }
 
     void initMAVStateCBPtr(mav_state& state)
@@ -103,6 +110,7 @@ namespace bt_state
 
         state.pub_goal_plot = state.nodeHandle.advertise<geometry_msgs::Point>("plot/explore_goal", 100);
         state.pub_cancel_explore = state.nodeHandle.advertise<geometry_msgs::Point>("plot/explore_cancel", 100);
+        state.pub_motor_failed_point = state.nodeHandle.advertise<geometry_msgs::Point>("plot/pub_motor_failed_point", 100);
 
 
     }

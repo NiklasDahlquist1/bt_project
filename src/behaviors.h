@@ -204,10 +204,10 @@ namespace behaviors
                 }
 
 
-
+                double failHeight = 3.5;
 
                     // test check heigh, to not break "noTaskTree", make sure that the task wont fail if UAV is already to high, 
-                if(state->mavPose.position.z > 3 && state->taskIsActive && state->goalPose.position.z > 3) // remove
+                if(state->mavPose.position.z > failHeight && state->taskIsActive && state->goalPose.position.z > failHeight) // remove
                 {
 
                     //must fail to ticks in a row (to allow another node to set goalPose...)
@@ -264,6 +264,18 @@ namespace behaviors
                 if(this->state == nullptr)
                 {
                     ROS_INFO_STREAM("CheckTaskFailUAVAtPoint, pointer to state = null");
+                }
+
+
+                // check if the task has failed, to be able to sell it again
+
+                //simulate motor failure
+
+                if(state->motorFail == true)
+                {
+                    // set bool to stop bidding TODO implement
+                    state->canBidForNewTask = false;
+                    return BT::NodeStatus::FAILURE;
                 }
                 
                 // check if the task has failed, to be able to sell it again
@@ -910,7 +922,6 @@ class UAVAtPointOnce : public BT::SyncActionNode
             if (state == actionlib::SimpleClientGoalState::SUCCEEDED)
             {
                 //ROS_INFO("Goal reached");
-                this->state->isFlying = false;
                 return BT::NodeStatus::SUCCESS;
             } 
             else if (state == actionlib::SimpleClientGoalState::ACTIVE) 
@@ -934,7 +945,6 @@ class UAVAtPointOnce : public BT::SyncActionNode
             if (state == actionlib::SimpleClientGoalState::SUCCEEDED)
             {
                 //ROS_INFO("Goal reached");
-                this->state->isFlying = false;
                 return BT::NodeStatus::SUCCESS;
             } 
             else if (state == actionlib::SimpleClientGoalState::ACTIVE) 
@@ -1208,6 +1218,9 @@ class UAVAtPointOnce : public BT::SyncActionNode
                 {
                     if(this->remove == false)
                     {
+                        std::cout << "LANDED " << ros::this_node::getName() << std::endl;
+                        this->state->isFlying = false;
+
 
                         // publish goal position once to stop
                         geometry_msgs::PoseStamped p;

@@ -180,29 +180,40 @@ void publishGridOfPoints()
 
 
     // scatter points over the rectangle (-width, -height),(width, height)
-    double rectWidth = 5;
-    double RectHeight = 5;
+    double rectWidth = 4; // symmetric size
+    double RectHeight = 4; // symmetric size
     double height = 2;
-    int pointsPerWidth = 9; //points + 1
-    int PointsPerHeight = 9; //points + 1
+    double RectZHeight = 0.5; // symmetric size
+    int pointsPerWidth = 5; 
+    int PointsPerHeight = 5;
+    int PointsPerZHeight = 2; 
     double x;
     double y;
     double z = height;
 
-    for(int i = 0; i < pointsPerWidth; ++i)
+    for(int k = 0; k < PointsPerZHeight; ++k)
     {
-        for(int j = 0; j < PointsPerHeight ; ++j)
+        for(int i = 0; i < pointsPerWidth; ++i)
         {
-            x = 2*rectWidth * (-1 + (2.0*i)/(pointsPerWidth - 1));
-            y = 2*RectHeight * (-1 + (2.0*j)/(PointsPerHeight - 1));
+            for(int j = 0; j < PointsPerHeight ; ++j)
+            {
+                x = rectWidth * (-1 + (2.0*i)/(pointsPerWidth - 1));
+                y = RectHeight * (-1 + (2.0*j)/(PointsPerHeight - 1));
 
-            auction.task_data = std::to_string(x) += ";" + std::to_string(y) += ";" + std::to_string(z) += ";0;0;0;1";
-            auction.auction_ID = (int) (dist(e2)*INT_MAX);
-            auctionArr.auctions.push_back(auction);
+                if(PointsPerZHeight == 1)
+                    z = height;
+                else
+                    z = height + RectZHeight * (-1 + (2.0*k)/(PointsPerZHeight - 1));
 
-            std::cout << "Point: (" << x << ", " << y << ", " << z << ")" << std::endl;
+                auction.task_data = std::to_string(x) += ";" + std::to_string(y) += ";" + std::to_string(z) += ";0;0;0;1";
+                auction.auction_ID = (int) (dist(e2)*INT_MAX);
+                auctionArr.auctions.push_back(auction);
+
+                std::cout << "Point: (" << x << ", " << y << ", " << z << ")" << std::endl;
+            }
         }
     }
+
     std::cout << "number of points: " << auctionArr.auctions.size() << std::endl;
 
 
