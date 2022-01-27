@@ -5,6 +5,21 @@
 
 
 
+<!-- start crazy flies -->
+  <include file="$(find crazyflie_driver)/launch/crazyflie_server.launch">
+  </include>
+
+  <group ns="crazyflie1">
+    <include file="$(find crazyflie_driver)/launch/crazyflie_add.launch">
+      <arg name="uri" value="$(arg uri1)" />
+      <arg name="tf_prefix" value="crazyflie1" />
+      <arg name="enable_logging" value="False" />
+    </include>
+  </group>
+
+
+
+
 <!-- Activate save to rosbag -->
   <include file="$(find bt_project)/launch/save_to_rosbag.launch"/>
 
@@ -19,7 +34,7 @@
 <!-- start crazy flie controllers -->
   <node name="controller" pkg="bt_project" type="crazyflie_controller.py" output="screen">
     <remap from="odom" to="odom?"/>
-    <remap from="reference" to="goalPose?"/>
+    <remap from="reference" to="uav1/reference"/>
     <remap from="cmd_vel" to="crazyflie_cmd_vel?"/>
   </node>
 
@@ -42,7 +57,7 @@
 
   <node name="mav_moveto_action1" pkg="test_action" type="moveto_server">
     <remap from="odometry" to="odom?" />
-    <remap from="goalPose" to="goalPose?" />
+    <remap from="goalPose" to="uav1/reference" />
   </node>
 
 
@@ -66,7 +81,7 @@
     <rosparam param="task_data">0;0;1</rosparam> <!-- -5;0;2;0;0;0;1 -5;0;2;30 0;0;2 -->
 
     <remap from="odometry" to="odom?" />
-    <remap from="uavGoal" to="goalPose?"/>
+    <remap from="uavGoal" to="uav1/reference"/>
 
     <remap from="mav_moveto_action/cancel" to="mav_moveto_action1/cancel" />
     <remap from="mav_moveto_action/feedback" to="mav_moveto_action1/feedback" />

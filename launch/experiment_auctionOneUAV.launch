@@ -21,7 +21,7 @@
 <!-- start crazy flie controllers -->
   <node name="controller" pkg="bt_project" type="crazyflie_controller.py" output="screen">
     <remap from="odom" to="odom?"/>
-    <remap from="reference" to="goalPose?"/>
+    <remap from="reference" to="uav1/reference"/>
     <remap from="cmd_vel" to="crazyflie_cmd_vel?"/>
   </node>
 
@@ -44,7 +44,7 @@
   <!-- Launch one action server for each mav -->
   <node name="mav_moveto_action1" pkg="test_action" type="moveto_server">
     <remap from="odometry" to="odom?" />
-    <remap from="goalPose" to="goalPose?" />
+    <remap from="goalPose" to="uav1/reference" />
   </node>
 
 
@@ -60,7 +60,7 @@
 
   <node name="uav_client_1" pkg="bt_project" type="client" output="screen">
     <remap from="odometry" to="odom?" />
-    <remap from="uavGoal" to="goalPose?"/>
+    <remap from="uavGoal" to="uav1/reference"/>
     <remap from="motor_fail" to="uav_clinet_1/motor_fail"/>
 
     <remap from="mav_moveto_action/cancel" to="mav_moveto_action1/cancel" />
