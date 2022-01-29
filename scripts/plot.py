@@ -91,7 +91,7 @@ def logic():
 
 
     # setup subscribers
-    rospy.Subscriber("firefly1/odometry_sensor1/odometry", Odometry, curve_0_CB)
+    rospy.Subscriber("pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom", Odometry, curve_0_CB)
     rospy.Subscriber("firefly2/odometry_sensor1/odometry", Odometry, curve_1_CB)
     rospy.Subscriber("firefly3/odometry_sensor1/odometry", Odometry, curve_2_CB)
     rospy.Subscriber("firefly4/odometry_sensor1/odometry", Odometry, curve_3_CB)
@@ -111,8 +111,8 @@ def logic():
 
     #rate = rospy.Rate(1.0 / 2)
     #rate.sleep()
-    #input("Press Enter to continue...") # requires python3... 
-    raw_input("Press Enter to continue...") # python2
+    input("Press Enter to continue...") # requires python3... 
+    #raw_input("Press Enter to continue...") # python2
  
 
 

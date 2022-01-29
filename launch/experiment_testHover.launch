@@ -9,14 +9,14 @@
   <include file="$(find crazyflie_driver)/launch/crazyflie_server.launch">
   </include>
 
-  <group ns="crazyflie1">
+<!--  <group ns="crazyflie1">
     <include file="$(find crazyflie_driver)/launch/crazyflie_add.launch">
       <arg name="uri" value="$(arg uri1)" />
       <arg name="tf_prefix" value="crazyflie1" />
       <arg name="enable_logging" value="False" />
     </include>
   </group>
-
+-->
 
 
 
@@ -32,22 +32,22 @@
 
 
 <!-- start crazy flie controllers -->
-  <node name="controller" pkg="bt_project" type="crazyflie_controller.py" output="screen">
-    <remap from="odom" to="odom?"/>
+<!--  <node name="controller" pkg="bt_project" type="crazyflie_controller.py" output="screen">
+    <remap from="odom" to="pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom"/>
     <remap from="reference" to="uav1/reference"/>
     <remap from="cmd_vel" to="crazyflie_cmd_vel?"/>
   </node>
-
+-->
 
 
 
 <!-- for the potential field, max 5 uavs -->
   <node name="obs_points" pkg="bt_project" type="obstacles">
-    <remap from="odometry_UAV_1" to="/firefly1/odometry_sensor1/odometry"/>
-    <remap from="odometry_UAV_2" to="/firefly2/odometry_sensor1/odometry"/>
-    <remap from="odometry_UAV_3" to="/firefly3/odometry_sensor1/odometry"/>
-    <remap from="odometry_UAV_4" to="/firefly4/odometry_sensor1/odometry"/>
-    <remap from="odometry_UAV_5" to="/firefly5/odometry_sensor1/odometry"/>
+    <remap from="odometry_UAV_1" to="pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom"/>
+  <!--  <remap from="odometry_UAV_2" to="odom2?"/>
+    <remap from="odometry_UAV_3" to="odom3?"/>
+    <remap from="odometry_UAV_4" to="odom4?"/>
+    <remap from="odometry_UAV_5" to="odom5?"/> -->
   </node>
 
 
@@ -56,7 +56,7 @@
   <!-- Launch one action server for each mav -->
 
   <node name="mav_moveto_action1" pkg="test_action" type="moveto_server">
-    <remap from="odometry" to="odom?" />
+    <remap from="odometry" to="pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom" />
     <remap from="goalPose" to="uav1/reference" />
   </node>
 
@@ -78,9 +78,9 @@
     <rosparam param="behavior_available">behavior_available.csv</rosparam>
     <rosparam param="behavior_definition">behavior_definition.csv</rosparam>
     <rosparam param="task_name">moveTo</rosparam> <!-- moveTo explore land -->
-    <rosparam param="task_data">0;0;1</rosparam> <!-- -5;0;2;0;0;0;1 -5;0;2;30 0;0;2 -->
+    <rosparam param="task_data">0;4;1;0;0;0;1</rosparam> <!-- -5;0;2;0;0;0;1 -5;0;2;30 0;0;2 -->
 
-    <remap from="odometry" to="odom?" />
+    <remap from="odometry" to="pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom" />
     <remap from="uavGoal" to="uav1/reference"/>
 
     <remap from="mav_moveto_action/cancel" to="mav_moveto_action1/cancel" />

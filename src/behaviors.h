@@ -166,6 +166,7 @@ namespace behaviors
         private: 
             bt_state::mav_state* state;
             bool failLastTick = false;
+            
         public:
 
             void init(bt_state::mav_state* statePtr)
@@ -204,7 +205,7 @@ namespace behaviors
                 }
 
 
-                double failHeight = 3.5;
+                double failHeight = 1.8;
 
                     // test check heigh, to not break "noTaskTree", make sure that the task wont fail if UAV is already to high, 
                 if(state->mavPose.position.z > failHeight && state->taskIsActive && state->goalPose.position.z > failHeight) // remove
@@ -219,8 +220,22 @@ namespace behaviors
                     {
                         //publish current uav pos once to make sure the uav does not continue moving, TODO, maybe set goal point instead (and continue running a BT)?
                         geometry_msgs::PoseStamped p;
+
+                        //set hold pos  
+                        if(state->UAVAtTasFailedkHoldPointSet == false)
+                        {
+                            state->UAVTaskFailedHoldPoint = state->mavPose;
+
+                            state->UAVAtTasFailedkHoldPointSet = true;
+                        }
+                        else
+                        {
+
+                        }
+
+                        
+                        p.pose = state->UAVTaskFailedHoldPoint;
                         p.header.stamp = ros::Time::now();
-                        p.pose.position = state->mavPose.position;
                         state->pub_uavWP.publish(p);
 
                         return BT::NodeStatus::FAILURE;
@@ -228,9 +243,12 @@ namespace behaviors
                 }
                 else
                 {
+                    state->UAVAtTasFailedkHoldPointSet = false;
                     failLastTick = false;
                     return BT::NodeStatus::SUCCESS;
                 }
+
+                return BT::NodeStatus::SUCCESS;
             }
     };
 
@@ -803,7 +821,7 @@ class UAVAtPointOnce : public BT::SyncActionNode
 
             goal_.pose_goal = startPose;
             //add one meter to z
-            goal_.pose_goal.position.z += 1;
+            goal_.pose_goal.position.z += 0.5;
             
             
             actionClient_.sendGoal(goal_);
@@ -1198,7 +1216,7 @@ class UAVAtPointOnce : public BT::SyncActionNode
 
                 geometry_msgs::Point pointAboveLanding;
                 pointAboveLanding = msg_pointToLandAt.value();
-                pointAboveLanding.z += 1;
+                pointAboveLanding.z += 0.5;
                 // set output
                 setOutput("pointAboveLanding", pointAboveLanding);
                 setOutput("landingPoint", msg_pointToLandAt.value());

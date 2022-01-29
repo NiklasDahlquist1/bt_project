@@ -245,6 +245,7 @@ namespace bt
                 for(Node_bt* n : this->childs)
                 {
                      //TODO, fix this for cleaning up memory from new()
+                     //maybe not needed anymore, remove?
                 }
             }
 

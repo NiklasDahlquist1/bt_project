@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # license removed for brevity
 import rospy
 from std_msgs.msg import String
@@ -78,16 +78,16 @@ def callback_safety(data):
 
 
 def controller():
-    pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+    pub = rospy.Publisher('/demo_crazyflie4/cmd_vel', Twist, queue_size=1)
     rospy.init_node('controller', anonymous=True)
-    sub = rospy.Subscriber('/odom', Odometry, callback)
+    sub = rospy.Subscriber('/pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom', Odometry, callback)
     sub_safety = rospy.Subscriber('safety_land', String, callback_safety)
-    sub_ref = rospy.Subscriber('reference', PoseStamped, callback_ref)
+    sub_ref = rospy.Subscriber('uav1/reference', PoseStamped, callback_ref)
     rate = rospy.Rate(20) # 20hz
     global xref, yref, zref, integrator, land_flag, yawref
     xref = 0
     yref = 4
-    zref = 1
+    zref = 0.5
     yawref = 0
     to_thrust = 0.6
     land_flag = 0

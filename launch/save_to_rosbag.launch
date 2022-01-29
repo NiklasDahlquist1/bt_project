@@ -3,7 +3,11 @@
 
 
 
-  <node pkg="rosbag" type="record" name="rosbag_record_hrpsys" args="firefly1/odometry_sensor1/odometry 
+  <node pkg="rosbag" type="record" name="rosbag_record_hrpsys" args="
+pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom
+
+  
+firefly1/odometry_sensor1/odometry 
 firefly2/odometry_sensor1/odometry 
 firefly3/odometry_sensor1/odometry 
 firefly4/odometry_sensor1/odometry 

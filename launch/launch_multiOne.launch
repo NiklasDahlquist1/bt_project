@@ -3,8 +3,8 @@
 
 
 <!-- Activate save to rosbag -->
-  <include file="$(find bt_project)/launch/save_to_rosbag.launch"/>
-
+<!--  <include file="$(find bt_project)/launch/save_to_rosbag.launch"/>
+-->
 
 
   <arg name="world_name" default="basic"/>

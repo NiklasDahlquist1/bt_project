@@ -36,6 +36,11 @@ namespace bt_state
         ros::NodeHandle nodeHandle;
         ros::Publisher pub_uavWP;
 
+
+        // test for uavtaskfailed, a little hacky? maybe needed to not crash in experiment? (to make sure the same point is published if multiple tasks are failed)
+        geometry_msgs::Pose UAVTaskFailedHoldPoint;
+        bool UAVAtTasFailedkHoldPointSet = false;
+
         bool isFlying = false;
         bool taskIsNew = false;
 
