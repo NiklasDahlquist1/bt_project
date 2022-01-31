@@ -91,11 +91,20 @@ def logic():
 
 
     # setup subscribers
-    rospy.Subscriber("pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom", Odometry, curve_0_CB)
+    rospy.Subscriber("firefly1/odometry_sensor1/odometry", Odometry, curve_0_CB)
     rospy.Subscriber("firefly2/odometry_sensor1/odometry", Odometry, curve_1_CB)
     rospy.Subscriber("firefly3/odometry_sensor1/odometry", Odometry, curve_2_CB)
     rospy.Subscriber("firefly4/odometry_sensor1/odometry", Odometry, curve_3_CB)
     rospy.Subscriber("firefly5/odometry_sensor1/odometry", Odometry, curve_4_CB)
+
+    rospy.Subscriber("pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom", Odometry, curve_0_CB)
+    rospy.Subscriber("pixy/vicon/demo_crazyflie4/demo_crazyflie5/odom", Odometry, curve_1_CB) #TODO, fix topic names for current crazyflies
+    rospy.Subscriber("pixy/vicon/demo_crazyflie4/demo_crazyflie6/odom", Odometry, curve_2_CB)
+    rospy.Subscriber("pixy/vicon/demo_crazyflie4/demo_crazyflie7/odom", Odometry, curve_3_CB)
+    rospy.Subscriber("pixy/vicon/demo_crazyflie4/demo_crazyflie8/odom", Odometry, curve_4_CB)
+
+
+
 
     #rospy.Subscriber("auction_winner", auction_winner, auction_winner_CB)
 

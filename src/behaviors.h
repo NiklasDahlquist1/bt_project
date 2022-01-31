@@ -215,16 +215,21 @@ namespace behaviors
                     if(failLastTick == false)
                     {
                         failLastTick = true;
+                        return BT::NodeStatus::SUCCESS;
                     }
                     else
                     {
                         //publish current uav pos once to make sure the uav does not continue moving, TODO, maybe set goal point instead (and continue running a BT)?
                         geometry_msgs::PoseStamped p;
 
-                        //set hold pos  
+                        //set hold pos, otherwise use pose from previous failed task
                         if(state->UAVAtTasFailedkHoldPointSet == false)
                         {
-                            state->UAVTaskFailedHoldPoint = state->mavPose;
+                            state->UAVTaskFailedHoldPoint.position = state->mavPose.position;
+                            state->UAVTaskFailedHoldPoint.orientation.x = 0;
+                            state->UAVTaskFailedHoldPoint.orientation.y = 0;
+                            state->UAVTaskFailedHoldPoint.orientation.z = 0;
+                            state->UAVTaskFailedHoldPoint.orientation.w = 1;
 
                             state->UAVAtTasFailedkHoldPointSet = true;
                         }
@@ -233,7 +238,7 @@ namespace behaviors
 
                         }
 
-                        
+
                         p.pose = state->UAVTaskFailedHoldPoint;
                         p.header.stamp = ros::Time::now();
                         state->pub_uavWP.publish(p);
@@ -247,8 +252,6 @@ namespace behaviors
                     failLastTick = false;
                     return BT::NodeStatus::SUCCESS;
                 }
-
-                return BT::NodeStatus::SUCCESS;
             }
     };
 

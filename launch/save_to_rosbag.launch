@@ -6,6 +6,11 @@
   <node pkg="rosbag" type="record" name="rosbag_record_hrpsys" args="
 pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom
 
+pixy/vicon/demo_crazyflie4/demo_crazyflie5/odom
+pixy/vicon/demo_crazyflie4/demo_crazyflie6/odom
+pixy/vicon/demo_crazyflie4/demo_crazyflie7/odom
+pixy/vicon/demo_crazyflie4/demo_crazyflie8/odom
+
   
 firefly1/odometry_sensor1/odometry 
 firefly2/odometry_sensor1/odometry 
