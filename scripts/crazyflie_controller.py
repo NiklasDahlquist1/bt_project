@@ -85,9 +85,23 @@ def controller():
     sub_ref = rospy.Subscriber('uav1/reference', PoseStamped, callback_ref)
     rate = rospy.Rate(20) # 20hz
     global xref, yref, zref, integrator, land_flag, yawref
+
+
     xref = 0
     yref = 4
     zref = 0.5
+    #let launch file set starting reference (otherwise use "standard" values)
+    if rospy.has_param(rospy.get_name() + "/xref"):
+        xref = rospy.get_param(rospy.get_name() + "/xref")
+
+    if rospy.has_param(rospy.get_name() + "/yref"):
+        yref = rospy.get_param(rospy.get_name() + "/yref")
+
+    if rospy.has_param(rospy.get_name() + "/zref"):
+        zref = rospy.get_param(rospy.get_name() + "/zref")
+
+    print("Starting reference: (" + str(xref) + ";" + str(yref) + ";" + str(zref) + ")")
+
     yawref = 0
     to_thrust = 0.6
     land_flag = 0
