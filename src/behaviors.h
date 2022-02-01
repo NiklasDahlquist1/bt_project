@@ -225,13 +225,13 @@ namespace behaviors
                 {
 
                     //must fail to ticks in a row (to allow another node to set goalPose...)
-                    if(failLastTick == false)
-                    {
-                        failLastTick = true;
-                        return BT::NodeStatus::SUCCESS;
-                    }
-                    else
-                    {
+                //    if(failLastTick == false)
+                //    {
+                //        failLastTick = true;
+                //        return BT::NodeStatus::SUCCESS;
+                //    }
+                //    else
+                //    {
                         //publish current uav pos once to make sure the uav does not continue moving, TODO, maybe set goal point instead (and continue running a BT)?
                         geometry_msgs::PoseStamped p;
 
@@ -257,7 +257,7 @@ namespace behaviors
                         state->pub_uavWP.publish(p);
 
                         return BT::NodeStatus::FAILURE;
-                    }
+                //    }
                 }
                 else
                 {
