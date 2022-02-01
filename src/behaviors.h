@@ -43,8 +43,9 @@
 
 
 #define MAX_HEIGHT_MOVETO 1.8
-#define TAKEOFF_HEIGHT 0.4
-#define LAND_HEIGHT 0.4
+#define TAKEOFF_HEIGHT 1
+#define LAND_HEIGHT 1
+#define UAV_AT_POINT_TOLERANCE 0.1
 
 
 
@@ -374,7 +375,7 @@ namespace behaviors
 
                 double error2 = pow(state->mavPose.position.x - p.x, 2) + pow(state->mavPose.position.y - p.y, 2) + pow(state->mavPose.position.z - p.z, 2);
 
-                double tol = 0.1; // tolerance to accept current position
+                double tol = UAV_AT_POINT_TOLERANCE;//0.1; // tolerance to accept current position
                 if(error2 < pow(tol, 2))
                 {
                     //ROS_INFO_STREAM("UAV at point, action SUCCESS");
@@ -458,7 +459,7 @@ class UAVAtPointOnce : public BT::SyncActionNode
 
                 double error2 = pow(state->mavPose.position.x - p.x, 2) + pow(state->mavPose.position.y - p.y, 2) + pow(state->mavPose.position.z - p.z, 2);
 
-                double tol = 0.1; // tolerance to accept current position
+                double tol = UAV_AT_POINT_TOLERANCE; //0.1; // tolerance to accept current position
                 if(error2 < pow(tol, 2))
                 {
                     this->visitedPoint = true;
@@ -1248,7 +1249,7 @@ class UAVAtPointOnce : public BT::SyncActionNode
                                 pow(state->mavPose.position.z - msg_pointToLandAt.value().z, 2);
 
 
-                double tol = 0.1; // tolerance to accept current position
+                double tol = UAV_AT_POINT_TOLERANCE;//0.1; // tolerance to accept current position
                 if(error2 < pow(tol, 2))
                 {
                     if(this->remove == false)

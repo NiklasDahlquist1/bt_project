@@ -180,8 +180,8 @@ void publishGridOfPoints()
 
 
     // scatter points over the rectangle (-width, -height),(width, height)
-    double rectWidth = 1.5; // symmetric size
-    double RectHeight = 1.5; // symmetric size
+    double rectWidth = 4; // symmetric size
+    double RectHeight = 4; // symmetric size
     double height = 2.5;
     double RectZHeight = 0.5; // symmetric size
     int pointsPerWidth = 4; 
@@ -192,7 +192,7 @@ void publishGridOfPoints()
     double z = height;
 
     double X = 0;
-    double Y = 4;
+    double Y = 0; //4;
 
     for(int k = 0; k < PointsPerZHeight; ++k)
     {

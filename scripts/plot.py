@@ -32,7 +32,6 @@ explore_cancel_points = []
 
 
 
-
 def curve_0_CB(data):
     curves_x[0].append(data.pose.pose.position.x)
     curves_y[0].append(data.pose.pose.position.y)
@@ -120,8 +119,8 @@ def logic():
 
     #rate = rospy.Rate(1.0 / 2)
     #rate.sleep()
-    input("Press Enter to continue...") # requires python3... 
-    #raw_input("Press Enter to continue...") # python2
+    #input("Press Enter to continue...") # requires python3... 
+    raw_input("Press Enter to continue...") # python2
  
 
 
@@ -131,12 +130,25 @@ def logic():
 
 
 
-
+    """figure.titlesize
+    axes.labelsize
+    axes.titlesize
+    font.size"""
 
     # plot
 
 
-    mpl.rcParams['legend.fontsize'] = 10
+    plt.rc('text', usetex=True) # gotta install latex for this
+    plt.rcParams.update({
+    "font.family": "serif",
+    "font.serif": ["Computer Modern Roman"],
+    #"ps.usedistiller" : "xpdf",
+    "font.size" : 12,
+    "axes.titlesize" : 18, #16
+})
+
+
+    mpl.rcParams['legend.fontsize'] = 11
     fig = plt.figure()
     ax = fig.gca(projection='3d')
 
@@ -209,20 +221,34 @@ def logic():
 
 
 
+
     # custom legends
     legend_elements = [Line2D([0], [0], color='b', lw=2, label='UAV Paths'),
-                       Line2D([0], [0], marker='^', color='w', label='Failed tasks', markerfacecolor='r', markersize=10),
-                       Line2D([0], [0], marker='^', color='w', label='Reached tasks', markerfacecolor='g', markersize=10),
-                       Line2D([0], [0], marker='^', color='w', label='Explore points', markerfacecolor='b', markersize=10),
-                       Line2D([0], [0], marker='^', color='w', label='Explore timeout', markerfacecolor='y', markersize=10)]#,
+                       Line2D([0], [0], marker='^', color='w', label='Failed tasks', markeredgewidth=1, markeredgecolor="k", markerfacecolor='r', markersize=10),
+                       Line2D([0], [0], marker='^', color='w', label='Reached tasks', markeredgewidth=1, markeredgecolor="k", markerfacecolor='g', markersize=10),
+                       
+                       ]
+                       #,
                        #Patch(facecolor='orange', edgecolor='r',
                        #  label='Color Patch')]
 
+
+    # add points related to explore if they exists
+    if(len(explore_goal_points) > 0):
+        legend_elements.append(Line2D([0], [0], marker='^', color='w', label='Explore points', markeredgewidth=1, markeredgecolor="k", markerfacecolor='b', markersize=10))
+        
+    if(len(explore_cancel_points) > 0):
+        legend_elements.append(Line2D([0], [0], marker='^', color='w', label='Explore timeout', markeredgewidth=1, markeredgecolor="k", markerfacecolor='y', markersize=10))
+
+
+
+
     ax.legend(handles=legend_elements, loc='best')
 
-    #plt.rc('text', usetex=True) # gotta install latex for this
-    #ax.legend( loc='best')
+
     
+    #ax.legend( loc='best')
+  
 
     ax.set_ylabel('Y [m]')
     ax.set_xlabel('X [m]')
