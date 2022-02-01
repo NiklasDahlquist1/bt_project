@@ -12,25 +12,6 @@
 
 
 
-<!-- run vicon node -->
-  <include file="$(find ros_viconstream)/launch/vicon.launch">
-  <!--<arg name="mav_name" default=""/>
-  <arg name="namespace" default=""/> -->
-  </include>
-
-
-<!-- start crazy flie controllers -->
-  <node name="controller" pkg="bt_project" type="crazyflie_controller.py" output="screen">
-    <remap from="odom" to="odom1?"/>
-    <remap from="reference" to="uav1/reference"/>
-    <remap from="cmd_vel" to="crazyflie_cmd_vel1?"/>
-  </node>
-
-  <node name="controller" pkg="bt_project" type="crazyflie_controller.py" output="screen">
-    <remap from="odom" to="odom2?"/>
-    <remap from="reference" to="uav2/reference"/>
-    <remap from="cmd_vel" to="crazyflie_cmd_vel2?"/>
-  </node>
 
 
 

@@ -1381,6 +1381,10 @@ class UAVAtPointOnce : public BT::SyncActionNode
                 goal.y += dist(e2) * 5 - 2.5;
                 goal.z += dist(e2) * 5 - 2.5;
 
+
+
+                
+
 /*
                 tf::Matrix3x3 rot;
                 tf::Quaternion rotQ;
@@ -1399,10 +1403,28 @@ class UAVAtPointOnce : public BT::SyncActionNode
                 goal.y += direction.getY();
                 goal.z += direction.getZ();
 */
+                //make sure we stay within the arena
+                double x_max = 2;
+                double x_min = -2;
+                double y_max = 2;
+                double y_min = -2;
+                double z_max = 1.8;
+                double z_min = 0.5;
+                
+                if(goal.x > x_max)
+                    goal.x = x_max;
+                else if(goal.x < x_min)
+                    goal.x = x_min;
 
-                if(goal.z < 0.8) // make sure we dont explore too low
-                    goal.z = 0.8;
+                if(goal.y > y_max)
+                    goal.y = y_max;
+                else if(goal.y < y_min)
+                    goal.y = y_min;
 
+                if(goal.z > z_max) // make sure we dont explore too low
+                    goal.z = z_max;
+                else if(goal.z < z_min)
+                    goal.z = z_min;
 
                 //TODO plotting
                 state->pub_goal_plot.publish(goal);

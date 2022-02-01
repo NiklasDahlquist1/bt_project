@@ -222,6 +222,10 @@ namespace auction
 
         if (bidsCurrentAuction.size() == 0)
         {
+            //zero workers? 
+            //ros::Duration delayRate(1);
+            //delayRate.sleep();
+
             for(bt_project::auction_auction a : currentAuctions) //return all auctions to the queue TODO ?
             {
                 auctionsQueue.push_back(a);

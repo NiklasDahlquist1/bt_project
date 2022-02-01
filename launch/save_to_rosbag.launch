@@ -31,7 +31,7 @@ firefly5/odometry_sensor1/odometry
 /plot/explore_goal
 /plot/task_aborted
 /plot/task_succeeded
-plot/pub_motor_failed_point
+/plot/pub_motor_failed_point
 
 /uav_clinet_1/motor_fail
 /uav_clinet_2/motor_fail

@@ -6,8 +6,10 @@
 
 
 <!-- start crazy flies -->
-  <include file="$(find crazyflie_driver)/launch/crazyflie_server.launch">
+<!--  <include file="$(find crazyflie_driver)/launch/crazyflie_server.launch">
   </include>
+-->
+
 
 <!--  <group ns="crazyflie1">
     <include file="$(find crazyflie_driver)/launch/crazyflie_add.launch">
@@ -25,10 +27,10 @@
 
 
 <!-- run vicon nodes -->
-  <include file="$(find ros_viconstream)/launch/vicon.launch">
+<!--  <include file="$(find ros_viconstream)/launch/vicon.launch"> -->
   <!--<arg name="mav_name" default=""/>
   <arg name="namespace" default=""/> -->
-  </include>
+<!--  </include> -->
 
 
 <!-- start crazy flie controllers -->

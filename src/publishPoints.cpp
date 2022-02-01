@@ -192,7 +192,7 @@ void publishGridOfPoints()
     double z = height;
 
     double X = 0;
-    double Y = 0; //4;
+    double Y = 4;
 
     for(int k = 0; k < PointsPerZHeight; ++k)
     {
@@ -249,7 +249,7 @@ void explore()
     auction.task_name = "explore";
     auction.creator_name = "test";
 
-    auction.task_data = "0;0;5;30";
+    auction.task_data = "0;0;1.5;40";
     auction.auction_ID = (int) (dist(e2)*INT_MAX);
     auctionArr.auctions.push_back(auction);
 
@@ -268,6 +268,67 @@ void explore()
     pub_moveTo.publish(auctionArr);
     delay.sleep();
     delay.sleep(); 
+}
+
+void custom()
+{
+    ros::NodeHandle nodeHandle;
+    ros::Publisher pub_moveTo = nodeHandle.advertise<bt_project::auction_auctionArray>("/auction_newAuctionArray", 1000, true);
+
+    std::random_device rd;
+    std::mt19937 e2(rd());
+    std::uniform_real_distribution<> dist(0, 1);
+
+    bt_project::auction_auctionArray auctionArr;
+    bt_project::auction_auction auction;
+    auction.auction_type = "single";
+    auction.creator_name = "test";
+
+
+
+    auction.task_name = "moveTo";
+    auction.task_data = "-0.9;4;1;0;0;0;1";
+    auction.auction_ID = (int) (dist(e2)*INT_MAX);
+    auctionArr.auctions.push_back(auction);
+
+
+
+    auction.task_name = "moveTo";
+    auction.task_data = "-1;4;2.5;0;0;0;1";
+    auction.auction_ID = (int) (dist(e2)*INT_MAX);
+    auctionArr.auctions.push_back(auction);
+
+
+
+    auction.task_name = "moveTo";
+    auction.task_data = "0.9;4;1;0;0;0;1";
+    auction.auction_ID = (int) (dist(e2)*INT_MAX);
+    auctionArr.auctions.push_back(auction);
+
+
+
+    auction.task_name = "moveTo";
+    auction.task_data = "1;4;2.5;0;0;0;1";
+    auction.auction_ID = (int) (dist(e2)*INT_MAX);
+    auctionArr.auctions.push_back(auction);
+
+
+    for(const bt_project::auction_auction& a : auctionArr.auctions)
+    {
+        std::cout << a.task_data << std::endl;
+        //std::cout << a.auction_ID << std::endl;
+    }
+
+    // publish
+    ros::Rate delay(1.5);
+    delay.sleep();
+    std::cout << "subs " << pub_moveTo.getNumSubscribers() << std::endl;
+    pub_moveTo.publish(auctionArr);
+    delay.sleep();
+    delay.sleep(); 
+
+
+    return;
 }
 
 
@@ -292,6 +353,10 @@ int main(int argc, char **argv)
         else if (s == "explore")
         {
             explore();
+        }
+        else if (s == "custom")
+        {
+            custom();
         }
         else
         {

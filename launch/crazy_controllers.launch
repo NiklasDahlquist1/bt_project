@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<launch>
+
+  
+  <node name="controller1" pkg="bt_project" type="crazyflie_controller.py" output="screen">
+    <remap from="odom" to="/pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom"/>
+    <remap from="reference" to="/uav1/reference"/>
+    <remap from="cmd_vel" to="/demo_crazyflie4/cmd_vel"/>
+
+    <rosparam param="xref">0</rosparam>
+    <rosparam param="yref">4</rosparam>
+    <rosparam param="zref">0.1</rosparam>
+  </node>
+
+
+
+
+<!--
+
+  <node name="controller2" pkg="bt_project" type="crazyflie_controller.py" output="screen">
+    <remap from="odom" to="/pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom"/>
+    <remap from="reference" to="/uav2/reference"/>
+    <remap from="cmd_vel" to="/demo_crazyflie4/cmd_vel"/>
+
+    <rosparam param="xref">-0.5</rosparam>
+    <rosparam param="yref">4</rosparam>
+    <rosparam param="zref">0.1</rosparam>
+  </node>
+
+
+  <node name="controller3" pkg="bt_project" type="crazyflie_controller.py" output="screen">
+    <remap from="odom" to="/pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom"/>
+    <remap from="reference" to="/uav3/reference"/>
+    <remap from="cmd_vel" to="/demo_crazyflie4/cmd_vel"/>
+
+    <rosparam param="xref">0.5</rosparam>
+    <rosparam param="yref">4.5</rosparam>
+    <rosparam param="zref">0.1</rosparam>
+  </node>
+
+
+  <node name="controller4" pkg="bt_project" type="crazyflie_controller.py" output="screen">
+    <remap from="odom" to="/pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom"/>
+    <remap from="reference" to="/uav4/reference"/>
+    <remap from="cmd_vel" to="/demo_crazyflie4/cmd_vel"/>
+
+    <rosparam param="xref">0</rosparam>
+    <rosparam param="yref">3.5</rosparam>
+    <rosparam param="zref">0.1</rosparam>
+  </node>
+
+
+  <node name="controller5" pkg="bt_project" type="crazyflie_controller.py" output="screen">
+    <remap from="odom" to="/pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom"/>
+    <remap from="reference" to="/uav5/reference"/>
+    <remap from="cmd_vel" to="/demo_crazyflie4/cmd_vel"/>
+
+    <rosparam param="xref">0</rosparam>
+    <rosparam param="yref">4.5</rosparam>
+    <rosparam param="zref">0.1</rosparam>
+  </node>
+
+-->
+
+
+
+</launch>

@@ -12,43 +12,9 @@
 
 
 
-<!-- run vicon node -->
-  <include file="$(find ros_viconstream)/launch/vicon.launch">
-  <!--<arg name="mav_name" default=""/>
-  <arg name="namespace" default=""/> -->
-  </include>
 
 
-<!-- start crazy flie controllers -->
-  <node name="controller" pkg="bt_project" type="crazyflie_controller.py" output="screen">
-    <remap from="odom" to="odom1?"/>
-    <remap from="reference" to="uav1/reference"/>
-    <remap from="cmd_vel" to="crazyflie_cmd_vel1?"/>
-  </node>
 
-  <node name="controller" pkg="bt_project" type="crazyflie_controller.py" output="screen">
-    <remap from="odom" to="odom2?"/>
-    <remap from="reference" to="uav2/reference"/>
-    <remap from="cmd_vel" to="crazyflie_cmd_vel2?"/>
-  </node>
-
-  <node name="controller" pkg="bt_project" type="crazyflie_controller.py" output="screen">
-    <remap from="odom" to="odom3?"/>
-    <remap from="reference" to="uav3/reference"/>
-    <remap from="cmd_vel" to="crazyflie_cmd_vel3?"/>
-  </node>
-
-  <node name="controller" pkg="bt_project" type="crazyflie_controller.py" output="screen">
-    <remap from="odom" to="odom4?"/>
-    <remap from="reference" to="uav4/reference"/>
-    <remap from="cmd_vel" to="crazyflie_cmd_vel4?"/>
-  </node>
-
-  <node name="controller" pkg="bt_project" type="crazyflie_controller.py" output="screen">
-    <remap from="odom" to="odom5?"/>
-    <remap from="reference" to="uav5/reference"/>
-    <remap from="cmd_vel" to="crazyflie_cmd_vel5?"/>
-  </node>
 
 
 
@@ -57,7 +23,7 @@
 
 <!-- for the potential field, max 5 uavs -->
   <node name="obs_points" pkg="bt_project" type="obstacles">
-    <remap from="odometry_UAV_1" to="odom1?"/>
+    <remap from="odometry_UAV_1" to="pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom"/>
     <remap from="odometry_UAV_2" to="odom2?"/>
     <remap from="odometry_UAV_3" to="odom3?"/>
     <remap from="odometry_UAV_4" to="odom4?"/>
@@ -69,7 +35,7 @@
 
   <!-- Launch one action server for each mav -->
   <node name="mav_moveto_action1" pkg="test_action" type="moveto_server">
-    <remap from="odometry" to="odom1?" />
+    <remap from="odometry" to="pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom" />
     <remap from="goalPose" to="uav1/reference" />
   </node>
 
