@@ -38,6 +38,19 @@
 //using namespace BT;
 
 
+
+
+
+
+#define MAX_HEIGHT_MOVETO 1.8
+#define TAKEOFF_HEIGHT 1
+#define LAND_HEIGHT 1
+#define UAV_AT_POINT_TOLERANCE 0.1
+
+
+
+
+
 namespace behaviors
 {
 
@@ -205,7 +218,7 @@ namespace behaviors
                 }
 
 
-                double failHeight = 1.8;
+                double failHeight = MAX_HEIGHT_MOVETO;
 
                     // test check heigh, to not break "noTaskTree", make sure that the task wont fail if UAV is already to high, 
                 if(state->mavPose.position.z > failHeight && state->taskIsActive && state->goalPose.position.z > failHeight) // remove
@@ -362,7 +375,7 @@ namespace behaviors
 
                 double error2 = pow(state->mavPose.position.x - p.x, 2) + pow(state->mavPose.position.y - p.y, 2) + pow(state->mavPose.position.z - p.z, 2);
 
-                double tol = 0.1; // tolerance to accept current position
+                double tol = UAV_AT_POINT_TOLERANCE;//0.1; // tolerance to accept current position
                 if(error2 < pow(tol, 2))
                 {
                     //ROS_INFO_STREAM("UAV at point, action SUCCESS");
@@ -446,7 +459,7 @@ class UAVAtPointOnce : public BT::SyncActionNode
 
                 double error2 = pow(state->mavPose.position.x - p.x, 2) + pow(state->mavPose.position.y - p.y, 2) + pow(state->mavPose.position.z - p.z, 2);
 
-                double tol = 0.1; // tolerance to accept current position
+                double tol = UAV_AT_POINT_TOLERANCE; //0.1; // tolerance to accept current position
                 if(error2 < pow(tol, 2))
                 {
                     this->visitedPoint = true;
@@ -824,8 +837,8 @@ class UAVAtPointOnce : public BT::SyncActionNode
 
             goal_.pose_goal = startPose;
             //add one meter to z
-            goal_.pose_goal.position.z += 0.5;
-            
+            //goal_.pose_goal.position.z += 0.5;
+            goal_.pose_goal.position.z = TAKEOFF_HEIGHT; // fixed takeoff height, assume we start at zero
             
             actionClient_.sendGoal(goal_);
             actionClient_.waitForResult(ros::Duration(0.01)); //wait for some response, otherwise the onRunning returns fail the first tick
@@ -1219,7 +1232,9 @@ class UAVAtPointOnce : public BT::SyncActionNode
 
                 geometry_msgs::Point pointAboveLanding;
                 pointAboveLanding = msg_pointToLandAt.value();
-                pointAboveLanding.z += 0.5;
+                //pointAboveLanding.z += 0.5;
+                pointAboveLanding.z = LAND_HEIGHT;
+
                 // set output
                 setOutput("pointAboveLanding", pointAboveLanding);
                 setOutput("landingPoint", msg_pointToLandAt.value());
@@ -1234,7 +1249,7 @@ class UAVAtPointOnce : public BT::SyncActionNode
                                 pow(state->mavPose.position.z - msg_pointToLandAt.value().z, 2);
 
 
-                double tol = 0.1; // tolerance to accept current position
+                double tol = UAV_AT_POINT_TOLERANCE;//0.1; // tolerance to accept current position
                 if(error2 < pow(tol, 2))
                 {
                     if(this->remove == false)

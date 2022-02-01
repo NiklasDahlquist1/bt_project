@@ -277,7 +277,7 @@ namespace operations_research
         result[i] = -1; //indicate that this worker has not been associated with a task
       }
     }
-    std::cout << "ehj" << std::endl;
+    //std::cout << "ehj" << std::endl;
 
     return result;
   }

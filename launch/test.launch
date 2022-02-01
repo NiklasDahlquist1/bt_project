@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <launch>
 
-  <include file="$(find ros_viconstream)/launch/vicon.launch">
-  <!--<arg name="mav_name" default=""/>
-  <arg name="namespace" default=""/> -->
-  </include>
-
+  
   <node name="controller" pkg="bt_project" type="crazyflie_controller.py" output="screen">
-    <remap from="odom" to="odom?"/>
-    <remap from="reference" to="goalPose?"/>
-    <remap from="cmd_vel" to="crazyflie_cmd_vel?"/>
+    <remap from="odom" to="odom"/>
+    <remap from="reference" to="goalPose"/>
+    <remap from="cmd_vel" to="crazyflie_cmd_vel"/>
+
+    <rosparam param="xref">0</rosparam>
+    <rosparam param="yref">4</rosparam>
+    <rosparam param="zref">0.1</rosparam>
   </node>
 
-  <node pkg="rosbag" type="record" name="rosbag_record_hrpsys" args="firefly1/odometry_sensor1/odometry firefly2/odometry_sensor1/odometry firefly3/odometry_sensor1/odometry firefly4/odometry_sensor1/odometry firefly5/odometry_sensor1/odometry"
+<!--  <node pkg="rosbag" type="record" name="rosbag_record_hrpsys" args="firefly1/odometry_sensor1/odometry firefly2/odometry_sensor1/odometry firefly3/odometry_sensor1/odometry firefly4/odometry_sensor1/odometry firefly5/odometry_sensor1/odometry"
        if="true" />
-
+-->
 </launch>
