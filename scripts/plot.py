@@ -253,7 +253,7 @@ def logic():
     ax.set_ylabel('Y [m]')
     ax.set_xlabel('X [m]')
     ax.set_zlabel('Z [m]')
-    ax.set_title('Simulation')
+    ax.set_title('Lab experiment')
     
 
     plt.savefig('plot.eps') 
