@@ -78,11 +78,11 @@ def callback_safety(data):
 
 
 def controller():
-    pub = rospy.Publisher('/demo_crazyflie4/cmd_vel', Twist, queue_size=1)
+    pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
     rospy.init_node('controller', anonymous=True)
-    sub = rospy.Subscriber('/pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom', Odometry, callback)
+    sub = rospy.Subscriber('odom', Odometry, callback)
     sub_safety = rospy.Subscriber('safety_land', String, callback_safety)
-    sub_ref = rospy.Subscriber('uav1/reference', PoseStamped, callback_ref)
+    sub_ref = rospy.Subscriber('reference', PoseStamped, callback_ref)
     rate = rospy.Rate(20) # 20hz
     global xref, yref, zref, integrator, land_flag, yawref
 

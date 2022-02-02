@@ -6,11 +6,17 @@
   <node pkg="rosbag" type="record" name="rosbag_record_hrpsys" args="
 pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom
 
-pixy/vicon/demo_crazyflie4/demo_crazyflie5/odom
-pixy/vicon/demo_crazyflie4/demo_crazyflie6/odom
-pixy/vicon/demo_crazyflie4/demo_crazyflie7/odom
-pixy/vicon/demo_crazyflie4/demo_crazyflie8/odom
+pixy/vicon/demo_crazyflie1/demo_crazyflie1/odom
+pixy/vicon/demo_crazyflie2/demo_crazyflie2/odom
 
+pixy/vicon/demo_crazyflie3/demo_crazyflie3/odom
+pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom
+pixy/vicon/demo_crazyflie5/demo_crazyflie5/odom
+pixy/vicon/demo_crazyflie6/demo_crazyflie6/odom
+pixy/vicon/demo_crazyflie7/demo_crazyflie7/odom
+pixy/vicon/demo_crazyflie8/demo_crazyflie8/odom
+pixy/vicon/demo_crazyflie9/demo_crazyflie9/odom
+pixy/vicon/demo_crazyflie6/demo_crazyflie6/odom
   
 firefly1/odometry_sensor1/odometry 
 firefly2/odometry_sensor1/odometry 
@@ -18,6 +24,12 @@ firefly3/odometry_sensor1/odometry
 firefly4/odometry_sensor1/odometry 
 firefly5/odometry_sensor1/odometry
 /clock
+
+/uav1/reference
+/uav2/reference
+/uav3/reference
+/uav4/reference
+/uav5/reference
 
 /auction_winner
 /auction_return

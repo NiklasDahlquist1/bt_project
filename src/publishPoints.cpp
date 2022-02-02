@@ -129,6 +129,24 @@ void demo()
     auction.task_name = "moveTo";
     auction.creator_name = "test";
 
+
+    auction.task_name = "moveTo";
+    auction.task_data = "-0.5;4;1;0;0;0;1";
+    auction.auction_ID = (int) (dist(e2)*INT_MAX);
+    auctionArr.auctions.push_back(auction);
+
+    auction.task_name = "moveTo";
+    auction.task_data = "1;4;1;0;0;0;1";
+    auction.auction_ID = (int) (dist(e2)*INT_MAX);
+    auctionArr.auctions.push_back(auction);
+
+    auction.task_name = "moveTo";
+    auction.task_data = "0;4;2.5;0;0;0;1";
+    auction.auction_ID = (int) (dist(e2)*INT_MAX);
+    auctionArr.auctions.push_back(auction);
+
+
+/*
     auction.task_data = std::to_string(0) += ";" + std::to_string(-3) += ";" + std::to_string(2.5) += ";0;0;0;1";
     auction.auction_ID = (int) (dist(e2)*INT_MAX);
     auctionArr.auctions.push_back(auction);
@@ -146,7 +164,7 @@ void demo()
     auction.task_data = "0;0;5;30";
     auction.auction_ID = (int) (dist(e2)*INT_MAX);
     auctionArr.auctions.push_back(auction);
-
+*/
 
     for(const bt_project::auction_auction& a : auctionArr.auctions)
     {
@@ -180,9 +198,9 @@ void publishGridOfPoints()
 
 
     // scatter points over the rectangle (-width, -height),(width, height)
-    double rectWidth = 4; // symmetric size
-    double RectHeight = 4; // symmetric size
-    double height = 2.5;
+    double rectWidth = 1.5; // symmetric size
+    double RectHeight = 1.5; // symmetric size
+    double height = 1.5;
     double RectZHeight = 0.5; // symmetric size
     int pointsPerWidth = 4; 
     int PointsPerHeight = 4;
@@ -249,7 +267,7 @@ void explore()
     auction.task_name = "explore";
     auction.creator_name = "test";
 
-    auction.task_data = "0;0;1.5;40";
+    auction.task_data = "0;4;1.4;40";
     auction.auction_ID = (int) (dist(e2)*INT_MAX);
     auctionArr.auctions.push_back(auction);
 
@@ -287,32 +305,32 @@ void custom()
 
 
     auction.task_name = "moveTo";
-    auction.task_data = "-0.9;4;1;0;0;0;1";
+    auction.task_data = "3;4;1;0;0;0;1";
     auction.auction_ID = (int) (dist(e2)*INT_MAX);
     auctionArr.auctions.push_back(auction);
 
 
 
     auction.task_name = "moveTo";
-    auction.task_data = "-1;4;2.5;0;0;0;1";
+    auction.task_data = "0;4;1;0;0;0;1";
+    auction.auction_ID = (int) (dist(e2)*INT_MAX);
+    auctionArr.auctions.push_back(auction);
+/*
+
+
+    auction.task_name = "moveTo";
+    auction.task_data = "1;4;1;0;0;0;1";
     auction.auction_ID = (int) (dist(e2)*INT_MAX);
     auctionArr.auctions.push_back(auction);
 
 
 
     auction.task_name = "moveTo";
-    auction.task_data = "0.9;4;1;0;0;0;1";
+    auction.task_data = "2;4;2.5;0;0;0;1";
     auction.auction_ID = (int) (dist(e2)*INT_MAX);
     auctionArr.auctions.push_back(auction);
 
-
-
-    auction.task_name = "moveTo";
-    auction.task_data = "1;4;2.5;0;0;0;1";
-    auction.auction_ID = (int) (dist(e2)*INT_MAX);
-    auctionArr.auctions.push_back(auction);
-
-
+*/
     for(const bt_project::auction_auction& a : auctionArr.auctions)
     {
         std::cout << a.task_data << std::endl;
