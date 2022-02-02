@@ -80,7 +80,7 @@
     <rosparam param="behavior_available">behavior_available.csv</rosparam>
     <rosparam param="behavior_definition">behavior_definition.csv</rosparam>
     <rosparam param="task_name">moveTo</rosparam> <!-- moveTo explore land -->
-    <rosparam param="task_data">0;4;1;0;0;0;1</rosparam> <!-- -5;0;2;0;0;0;1 -5;0;2;30 0;0;2 -->
+    <rosparam param="task_data">2;5;1.5;0;0;0;1</rosparam> <!-- -5;0;2;0;0;0;1 -5;0;2;30 0;0;2 -->
 
     <remap from="odometry" to="pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom" />
     <remap from="uavGoal" to="uav1/reference"/>

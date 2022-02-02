@@ -58,8 +58,8 @@ int main(int argc, char **argv)
     for(bt_project::obstacle_point& p : obstaclePositions)
     {
         p.pos.x = -MAXFLOAT; // init to a pos far away, to not collide if UAV does not exist
-        p.min_distance = 0.33;
-        p.max_distance = 1.2; //1.3
+        p.min_distance = 0.25; //0.33;
+        p.max_distance = 0.4;//1.2; //1.3
         p.min_value = 0.1;
         p.max_value = 0.4;
 

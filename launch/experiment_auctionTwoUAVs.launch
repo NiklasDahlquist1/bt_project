@@ -20,11 +20,11 @@
 
 <!-- for the potential field, max 5 uavs -->
   <node name="obs_points" pkg="bt_project" type="obstacles">
-    <remap from="odometry_UAV_1" to="odom1?"/>
-    <remap from="odometry_UAV_2" to="odom2?"/>
-    <remap from="odometry_UAV_3" to="odom3?"/>
+    <remap from="odometry_UAV_1" to="pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom"/>
+    <remap from="odometry_UAV_2" to="pixy/vicon/demo_crazyflie3/demo_crazyflie3/odom"/>
+<!--    <remap from="odometry_UAV_3" to="odom3?"/>
     <remap from="odometry_UAV_4" to="odom4?"/>
-    <remap from="odometry_UAV_5" to="odom5?"/>
+    <remap from="odometry_UAV_5" to="odom5?"/> -->
   </node>
 
 
@@ -32,12 +32,12 @@
 
   <!-- Launch one action server for each mav -->
   <node name="mav_moveto_action1" pkg="test_action" type="moveto_server">
-    <remap from="odometry" to="odom1?" />
+    <remap from="odometry" to="pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom" />
     <remap from="goalPose" to="uav1/reference" />
   </node>
 
   <node name="mav_moveto_action2" pkg="test_action" type="moveto_server">
-    <remap from="odometry" to="odom2?" />
+    <remap from="odometry" to="pixy/vicon/demo_crazyflie3/demo_crazyflie3/odom" />
     <remap from="goalPose" to="uav2/reference" />
   </node>
 
@@ -55,7 +55,7 @@
 
 
   <node name="uav_client_1" pkg="bt_project" type="client" output="screen">
-    <remap from="odometry" to="odom1?" />
+    <remap from="odometry" to="pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom" />
     <remap from="uavGoal" to="uav1/reference"/>
     <remap from="motor_fail" to="uav_clinet_1/motor_fail"/>
 
@@ -67,7 +67,7 @@
   </node>
 
   <node name="uav_client_2" pkg="bt_project" type="client" output="screen">
-    <remap from="odometry" to="odom2?" />
+    <remap from="odometry" to="pixy/vicon/demo_crazyflie3/demo_crazyflie3/odom" />
     <remap from="uavGoal" to="uav2/reference"/>
     <remap from="motor_fail" to="uav_clinet_2/motor_fail"/>
 

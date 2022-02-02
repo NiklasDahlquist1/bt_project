@@ -43,9 +43,9 @@
 
 
 #define MAX_HEIGHT_MOVETO 1.8
-#define TAKEOFF_HEIGHT 1
-#define LAND_HEIGHT 1
-#define UAV_AT_POINT_TOLERANCE 0.1
+#define TAKEOFF_HEIGHT 0.5
+#define LAND_HEIGHT 0.5
+#define UAV_AT_POINT_TOLERANCE 0.15
 
 
 
@@ -219,19 +219,30 @@ namespace behaviors
 
 
                 double failHeight = MAX_HEIGHT_MOVETO;
+                double x_max = 2.2;
+                double x_min = -2.2;
+                double y_max = 6.2;
+                double y_min = 1.8;
+
+                bool failedx = (state->mavPose.position.x > x_max || state->mavPose.position.x < x_min) &&  
+                                (state->goalPose.position.x > x_max || state->goalPose.position.x < x_min);
+
+
+                bool failedy = (state->mavPose.position.y > y_max || state->mavPose.position.y < y_min) && 
+                               (state->goalPose.position.y > y_max || state->goalPose.position.y < y_min);
 
                     // test check heigh, to not break "noTaskTree", make sure that the task wont fail if UAV is already to high, 
-                if(state->mavPose.position.z > failHeight && state->taskIsActive && state->goalPose.position.z > failHeight) // remove
+                if((state->mavPose.position.z > failHeight && state->taskIsActive && state->goalPose.position.z > failHeight) || failedx || failedy)
                 {
 
                     //must fail to ticks in a row (to allow another node to set goalPose...)
-                //    if(failLastTick == false)
-                //    {
-                //        failLastTick = true;
-                //        return BT::NodeStatus::SUCCESS;
-                //    }
-                //    else
-                //    {
+                    if(failLastTick == false)
+                    {
+                        failLastTick = true;
+                        return BT::NodeStatus::SUCCESS;
+                    }
+                    else
+                    {
                         //publish current uav pos once to make sure the uav does not continue moving, TODO, maybe set goal point instead (and continue running a BT)?
                         geometry_msgs::PoseStamped p;
 
@@ -257,7 +268,7 @@ namespace behaviors
                         state->pub_uavWP.publish(p);
 
                         return BT::NodeStatus::FAILURE;
-                //    }
+                    }
                 }
                 else
                 {
@@ -1377,9 +1388,9 @@ class UAVAtPointOnce : public BT::SyncActionNode
                 //goal.z = dist(e2) * 3.8 + 0.8;
 
                 goal = state->mavPose.position;
-                goal.x += dist(e2) * 5 - 2.5; // move to a position somewhat close to the current position
-                goal.y += dist(e2) * 5 - 2.5;
-                goal.z += dist(e2) * 5 - 2.5;
+                goal.x += dist(e2) * 2 - 1; // move to a position somewhat close to the current position
+                goal.y += dist(e2) * 2 - 1;
+                goal.z += dist(e2) * 2 - 1;
 
 
 
@@ -1406,8 +1417,8 @@ class UAVAtPointOnce : public BT::SyncActionNode
                 //make sure we stay within the arena
                 double x_max = 2;
                 double x_min = -2;
-                double y_max = 2;
-                double y_min = -2;
+                double y_max = 6;
+                double y_min = 4;
                 double z_max = 1.8;
                 double z_min = 0.5;
                 
