@@ -148,9 +148,42 @@ def logic():
 })
 """
 
+    edgecolor = [0.4, 0.4, 0.4]
+    mpl.rcParams['axes.edgecolor'] = edgecolor
+
+
+
     mpl.rcParams['legend.fontsize'] = 11
     fig = plt.figure()
     ax = fig.gca(projection='3d')
+
+    plot_color = [1, 1, 1]
+    ax.w_xaxis.set_pane_color(plot_color)
+    ax.w_yaxis.set_pane_color([c * 1 for c in plot_color])
+    ax.w_zaxis.set_pane_color([c * 1 for c in plot_color])
+
+    ax.zaxis.pane.set_edgecolor(edgecolor)
+    ax.xaxis.pane.set_edgecolor(edgecolor)
+    ax.yaxis.pane.set_edgecolor(edgecolor)
+    
+    ax.grid(False)
+    ax.xaxis.pane.fill = False
+    ax.yaxis.pane.fill = False
+    ax.zaxis.pane.fill = False
+    #ax.tick_params(axis='x', colors='red')
+
+    
+    #ax.view_init(elev=30, azim=135)
+    ax.view_init(elev=25, azim=135)
+    #ax.yaxis.pane.set_edgecolor([0,0,0])
+    #ax.zaxis.pane.set_edgecolor([0,0,0])
+
+    
+    #ax.set_facecolor('xkcd:salmon')
+
+
+    linewidth_plot = 1.1
+    linewidth_marker = 0.8
 
 
     # plot all curves
@@ -159,8 +192,10 @@ def logic():
         y = np.array(curves_y[i])
         z = np.array(curves_z[i])
 
-        ax.plot(x, y, z, label='Path ' + str(i))
+        ax.plot(x, y, z, label='Path ' + str(i), linewidth=1)
         
+
+
 
 
     # plot all objects
@@ -186,7 +221,7 @@ def logic():
         y = np.array(task_succeeded_points[i][1])
         z = np.array(task_succeeded_points[i][2])
 
-        ax.scatter(x, y, z, """label='succeeded ' + str(i)""", c='g', edgecolors='k', linewidths=1, marker='^', s=45)
+        ax.scatter(x, y, z, """label='succeeded ' + str(i)""", c='g', edgecolors='k', linewidths=linewidth_marker, marker='^', s=45)
         #ax.legend()
 
     for i in range(0, len(task_aborted_points)):
@@ -196,7 +231,7 @@ def logic():
         y = np.array(task_aborted_points[i][1])
         z = np.array(task_aborted_points[i][2])
 
-        ax.scatter(x, y, z, """label='aborted ' + str(i)""", c='r', edgecolors='k', linewidths=1,  marker='^', s=45)
+        ax.scatter(x, y, z, """label='aborted ' + str(i)""", c='r', edgecolors='k', linewidths=linewidth_marker,  marker='^', s=45)
         #ax.legend()
 
     for i in range(0, len(explore_goal_points)):
@@ -206,7 +241,7 @@ def logic():
         y = np.array(explore_goal_points[i][1])
         z = np.array(explore_goal_points[i][2])
 
-        ax.scatter(x, y, z, """label='goal ' + str(i)""", c='b', edgecolors='k', linewidths=1,  marker='^', s=45)
+        ax.scatter(x, y, z, """label='goal ' + str(i)""", c='b', edgecolors='k', linewidths=linewidth_marker,  marker='^', s=45)
         #ax.legend()
     for i in range(0, len(explore_cancel_points)):
         #if len(objects) == 0: #empty is ignored anyway...
@@ -215,7 +250,7 @@ def logic():
         y = np.array(explore_cancel_points[i][1])
         z = np.array(explore_cancel_points[i][2])
 
-        ax.scatter(x, y, z, """label='goal ' + str(i)""", c='y', edgecolors='k', linewidths=1,  marker='^', s=45)
+        ax.scatter(x, y, z, """label='goal ' + str(i)""", c='y', edgecolors='k', linewidths=linewidth_marker,  marker='^', s=45)
         #ax.legend()
 
 
@@ -223,9 +258,9 @@ def logic():
 
 
     # custom legends
-    legend_elements = [Line2D([0], [0], color='b', lw=2, label='UAV Paths'),
-                       Line2D([0], [0], marker='^', color='w', label='Failed tasks', markeredgewidth=1, markeredgecolor="k", markerfacecolor='r', markersize=10),
-                       Line2D([0], [0], marker='^', color='w', label='Reached tasks', markeredgewidth=1, markeredgecolor="k", markerfacecolor='g', markersize=10),
+    legend_elements = [Line2D([0], [0], color='b', lw=linewidth_plot, label='UAV Paths'),
+                       Line2D([0], [0], marker='^', color='w', label='Failed tasks', markeredgewidth=linewidth_marker, markeredgecolor="k", markerfacecolor='r', markersize=10),
+                       Line2D([0], [0], marker='^', color='w', label='Reached tasks', markeredgewidth=linewidth_marker, markeredgecolor="k", markerfacecolor='g', markersize=10),
                        
                        ]
                        #,
@@ -235,10 +270,10 @@ def logic():
 
     # add points related to explore if they exists
     if(len(explore_goal_points) > 0):
-        legend_elements.append(Line2D([0], [0], marker='^', color='w', label='Explore points', markeredgewidth=1, markeredgecolor="k", markerfacecolor='b', markersize=10))
+        legend_elements.append(Line2D([0], [0], marker='^', color='w', label='Explore points', markeredgewidth=linewidth_marker, markeredgecolor="k", markerfacecolor='b', markersize=10))
         
     if(len(explore_cancel_points) > 0):
-        legend_elements.append(Line2D([0], [0], marker='^', color='w', label='Explore timeout', markeredgewidth=1, markeredgecolor="k", markerfacecolor='y', markersize=10))
+        legend_elements.append(Line2D([0], [0], marker='^', color='w', label='Explore timeout', markeredgewidth=linewidth_marker, markeredgecolor="k", markerfacecolor='y', markersize=10))
 
 
 

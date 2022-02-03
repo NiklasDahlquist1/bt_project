@@ -844,6 +844,14 @@ class UAVAtPointOnce : public BT::SyncActionNode
             //goal_.pose_goal.position.z = 4;
 
 
+
+            // "start" motors
+            std_msgs::Bool flag;
+            flag.data = false;
+            this->state->pub_shutdown_motors_flag.publish(flag);
+
+
+
             startPose = this->state->mavPose;
 
             goal_.pose_goal = startPose;
@@ -1267,6 +1275,12 @@ class UAVAtPointOnce : public BT::SyncActionNode
                     {
                         std::cout << "LANDED " << ros::this_node::getName() << std::endl;
                         this->state->isFlying = false;
+
+
+                        //"shut down" motors
+                        std_msgs::Bool flag;
+                        flag.data = true;
+                        this->state->pub_shutdown_motors_flag.publish(flag);
 
 
                         // publish goal position once to stop

@@ -62,6 +62,7 @@
     <remap from="odometry" to="pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom" />
     <remap from="uavGoal" to="uav1/reference"/>
     <remap from="motor_fail" to="uav_clinet_1/motor_fail"/>
+    <remap from="shutdown_flag" to="uav_client_1/shutdown_flag"/>
 
     <remap from="mav_moveto_action/cancel" to="mav_moveto_action1/cancel" />
     <remap from="mav_moveto_action/feedback" to="mav_moveto_action1/feedback" />

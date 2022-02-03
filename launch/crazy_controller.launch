@@ -6,6 +6,8 @@
     <remap from="odom" to="/pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom"/>
     <remap from="reference" to="/uav1/reference"/>
     <remap from="cmd_vel" to="/demo_crazyflie4/cmd_vel"/>
+    
+    <remap from="shutdown_flag" to="uav_client_1/shutdown_flag"/>
 
     <rosparam param="xref">0</rosparam>
     <rosparam param="yref">4</rosparam>

@@ -5,6 +5,8 @@
     <remap from="odom" to="/pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom"/>
     <remap from="reference" to="/uav1/reference"/>
     <remap from="cmd_vel" to="/demo_crazyflie4/cmd_vel"/>
+    
+    <remap from="shutdown_flag" to="uav_client_1/shutdown_flag"/>
 
     <rosparam param="xref">0</rosparam>
     <rosparam param="yref">4</rosparam>
@@ -19,6 +21,8 @@
     <remap from="odom" to="/pixy/vicon/demo_crazyflie3/demo_crazyflie3/odom"/>
     <remap from="reference" to="/uav2/reference"/>
     <remap from="cmd_vel" to="/demo_crazyflie3/cmd_vel"/>
+    
+    <remap from="shutdown_flag" to="uav_client_2/shutdown_flag"/>
 
     <rosparam param="xref">0.5</rosparam>
     <rosparam param="yref">4</rosparam>
@@ -33,6 +37,8 @@
     <remap from="odom" to="/pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom"/>
     <remap from="reference" to="/uav3/reference"/>
     <remap from="cmd_vel" to="/demo_crazyflie4/cmd_vel"/>
+    
+    <remap from="shutdown_flag" to="uav_client_3/shutdown_flag"/>
 
     <rosparam param="xref">0.5</rosparam>
     <rosparam param="yref">4.5</rosparam>
@@ -44,6 +50,8 @@
     <remap from="odom" to="/pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom"/>
     <remap from="reference" to="/uav4/reference"/>
     <remap from="cmd_vel" to="/demo_crazyflie4/cmd_vel"/>
+    
+    <remap from="shutdown_flag" to="uav_client_4/shutdown_flag"/>
 
     <rosparam param="xref">0</rosparam>
     <rosparam param="yref">3.5</rosparam>
@@ -55,6 +63,8 @@
     <remap from="odom" to="/pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom"/>
     <remap from="reference" to="/uav5/reference"/>
     <remap from="cmd_vel" to="/demo_crazyflie4/cmd_vel"/>
+    
+    <remap from="shutdown_flag" to="uav_client_5/shutdown_flag"/>
 
     <rosparam param="xref">0</rosparam>
     <rosparam param="yref">4.5</rosparam>

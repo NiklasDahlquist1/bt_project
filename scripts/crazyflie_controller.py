@@ -8,6 +8,9 @@ from geometry_msgs.msg import PoseStamped
 import time 
 import numpy 
 import math
+
+from std_msgs.msg import Bool
+
 xpos = 0
 ypos = 0
 zpos = 0
@@ -75,17 +78,26 @@ def callback_safety(data):
     land_flag = 1
 
 
+def callback_shutdown(data):
+    global shutdown_flag
+    shutdown_flag = data.data
+
+
 
 
 def controller():
-    pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
     rospy.init_node('controller', anonymous=True)
+    pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
     sub = rospy.Subscriber('odom', Odometry, callback)
     sub_safety = rospy.Subscriber('safety_land', String, callback_safety)
     sub_ref = rospy.Subscriber('reference', PoseStamped, callback_ref)
     rate = rospy.Rate(20) # 20hz
     global xref, yref, zref, integrator, land_flag, yawref
 
+
+    sub_shutdown_flag = rospy.Subscriber("shutdown_flag", Bool, callback_shutdown)
+    global shutdown_flag
+    shutdown_flag = False
 
     xref = 0
     yref = 4
@@ -170,14 +182,26 @@ def controller():
         cmd_vel.linear.y = u_r 
         cmd_vel.linear.z = u_t
         cmd_vel.angular.z = u_y
-        pub.publish(cmd_vel)
+        if(shutdown_flag == False):
+            pub.publish(cmd_vel)
+        else:
+            cmd_vel.linear.x = 0
+            cmd_vel.linear.y = 0 
+            cmd_vel.linear.z = 0
+            cmd_vel.angular.z = 0
+            integrator = 0 # reset integrator?
+            pub.publish(cmd_vel)
+
+
         rate.sleep()
 
         t = t + 1
- 
+
+
 if __name__ == '__main__':
-     try:
-         controller()
-     except rospy.ROSInterruptException:
-         pass
+    try:
+        controller()
+    except rospy.ROSInterruptException:
+        pass
+
 
