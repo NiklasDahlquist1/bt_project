@@ -214,6 +214,20 @@ namespace behaviors
                 {
                     // set bool to stop bidding TODO implement
                     state->canBidForNewTask = false;
+
+                    geometry_msgs::PoseStamped p;
+                    state->UAVTaskFailedHoldPoint.position = state->mavPose.position;
+                    state->UAVTaskFailedHoldPoint.orientation.x = 0;
+                    state->UAVTaskFailedHoldPoint.orientation.y = 0;
+                    state->UAVTaskFailedHoldPoint.orientation.z = 0;
+                    state->UAVTaskFailedHoldPoint.orientation.w = 1;
+
+
+                    p.pose = state->UAVTaskFailedHoldPoint;
+                    p.header.stamp = ros::Time::now();
+                    state->pub_uavWP.publish(p);
+                    std::cout << "MOTOR failure? publishing current pose" << std::endl;
+
                     return BT::NodeStatus::FAILURE;
                 }
 

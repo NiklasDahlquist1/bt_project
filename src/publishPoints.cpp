@@ -37,9 +37,9 @@ std::cout << "subs: " << pub_moveTo.getNumSubscribers() << std::endl;
         auction.task_name = "moveTo";
         auction.creator_name = "test";
         auction.auction_ID = (int) (dist(e2)*INT_MAX);
-        double x = dist(e2) * 10 - 5;
-        double y = dist(e2) * 10 - 5;
-        double z = dist(e2) * 3.8 + 0.8;
+        double x = dist(e2) * 4 - 2 + 0;
+        double y = dist(e2) * 4 - 2 + 4;
+        double z = dist(e2) * 1 - 0.5 + 1;
         auction.task_data = std::to_string(x) += ";" + std::to_string(y) += ";" + std::to_string(z) += ";0;0;0;1";
 
         auctionArr.auctions.push_back(auction);
@@ -305,17 +305,10 @@ void custom()
 
 
     auction.task_name = "moveTo";
-    auction.task_data = "3;4;1;0;0;0;1";
-    auction.auction_ID = (int) (dist(e2)*INT_MAX);
-    auctionArr.auctions.push_back(auction);
-
-
-
-    auction.task_name = "moveTo";
     auction.task_data = "0;4;1;0;0;0;1";
     auction.auction_ID = (int) (dist(e2)*INT_MAX);
     auctionArr.auctions.push_back(auction);
-/*
+
 
 
     auction.task_name = "moveTo";
@@ -323,6 +316,13 @@ void custom()
     auction.auction_ID = (int) (dist(e2)*INT_MAX);
     auctionArr.auctions.push_back(auction);
 
+
+
+    auction.task_name = "moveTo";
+    auction.task_data = "-1;4;1;0;0;0;1";
+    auction.auction_ID = (int) (dist(e2)*INT_MAX);
+    auctionArr.auctions.push_back(auction);
+/*
 
 
     auction.task_name = "moveTo";
@@ -375,6 +375,11 @@ int main(int argc, char **argv)
         else if (s == "custom")
         {
             custom();
+        }
+        else if (s == "exploregrid")
+        {
+            explore();
+            publishGridOfPoints();
         }
         else
         {
