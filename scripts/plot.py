@@ -127,8 +127,8 @@ def callbacks():
 
     #rate = rospy.Rate(1.0 / 2)
     #rate.sleep()
-    input("Press Enter to continue...") # requires python3... 
-    #raw_input("Press Enter to continue...") # python2
+    #input("Press Enter to continue...") # requires python3... 
+    raw_input("Press Enter to continue...") # python2
  
 def plot2():
 
