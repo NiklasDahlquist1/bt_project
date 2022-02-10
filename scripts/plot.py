@@ -119,8 +119,8 @@ def logic():
 
     #rate = rospy.Rate(1.0 / 2)
     #rate.sleep()
-    input("Press Enter to continue...") # requires python3... 
-    #raw_input("Press Enter to continue...") # python2
+    #input("Press Enter to continue...") # requires python3... 
+    raw_input("Press Enter to continue...") # python2
  
 
 
@@ -138,7 +138,7 @@ def logic():
     # plot
 
 
-    """    plt.rc('text', usetex=True) # gotta install latex for this
+    plt.rc('text', usetex=True) # gotta install latex for this
     plt.rcParams.update({
     "font.family": "serif",
     "font.serif": ["Computer Modern Roman"],
@@ -146,7 +146,7 @@ def logic():
     "font.size" : 12,
     "axes.titlesize" : 18, #16
 })
-"""
+
 
     mpl.rcParams['legend.fontsize'] = 11
     fig = plt.figure()
