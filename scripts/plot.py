@@ -146,8 +146,8 @@ def plot2():
     "font.family": "serif",
     "font.serif": ["Computer Modern Roman"],
     #"ps.usedistiller" : "xpdf",
-    "font.size" : 9,
-    "axes.titlesize" : 14, #16
+    "font.size" : 11,
+    "axes.titlesize" : 15, #16
 })
 
 
@@ -156,8 +156,8 @@ def plot2():
 
 
 
-    mpl.rcParams['legend.fontsize'] = 9
-    fig, (ax1, ax2, ax3) = plt.subplots(3, sharex=True, figsize=[4.75, 3.75])
+    mpl.rcParams['legend.fontsize'] = 11
+    fig, (ax1, ax2, ax3) = plt.subplots(3, sharex=True)#, figsize=[4, 3])
     
 
     plot_color = [1, 1, 1]
@@ -198,10 +198,11 @@ def plot2():
         
         t = np.array([tt.to_sec() - curves_t[i][0].to_sec() for tt in curves_t[i]])
 
+        l_w = 1.1
         if(len(t) > 0):
-            ax1.plot(t, x, label='UAV ' + str(i + 1), linewidth=0.9)
-            ax2.plot(t, y, label='Path ' + str(i), linewidth=0.9)
-            ax3.plot(t, z, label='Path ' + str(i), linewidth=0.9)
+            ax1.plot(t, x, label='UAV ' + str(i + 1), linewidth=l_w)
+            ax2.plot(t, y, label='Path ' + str(i), linewidth=l_w)
+            ax3.plot(t, z, label='Path ' + str(i), linewidth=l_w)
 
 
     ax1.set_title('Lab experiment')
@@ -226,8 +227,8 @@ def plot2():
     plt.legend( loc='best')
 
 
-    plt.savefig('plot.eps') 
-    plt.savefig('plot.png', dpi=600) 
+    plt.savefig('plot2.eps') 
+    plt.savefig('plot2.png', dpi=600) 
     plt.show()
 
 
@@ -247,15 +248,15 @@ def plot3():
     # plot
 
 
-    """    plt.rc('text', usetex=True) # gotta install latex for this
+    plt.rc('text', usetex=False) # gotta install latex for this
     plt.rcParams.update({
     "font.family": "serif",
     "font.serif": ["Computer Modern Roman"],
     #"ps.usedistiller" : "xpdf",
-    "font.size" : 12,
-    "axes.titlesize" : 18, #16
-})
-"""
+    "font.size" : 11,
+    "axes.titlesize" : 15, #16
+    })
+
 
     edgecolor = [0.4, 0.4, 0.4]
     mpl.rcParams['axes.edgecolor'] = edgecolor
@@ -410,8 +411,8 @@ def plot3():
     ax.set_title('Lab experiment')
     
 
-    plt.savefig('plot.eps') 
-    plt.savefig('plot.png', dpi=600) 
+    plt.savefig('plot3.eps') 
+    plt.savefig('plot3.png', dpi=600) 
     plt.show()
 
 
@@ -440,8 +441,8 @@ if __name__ == '__main__':
     try:
         rospy.init_node('plotter', anonymous=True)
         callbacks()
-        #plot3()
-        plot2()
+        plot3()
+        #plot2()
 
     except rospy.ROSInterruptException:
         pass
