@@ -396,7 +396,7 @@ namespace auction
                 goalPose.z    = std::stod(parts[2]);
                 double time = std::stod(parts[3]);
 
-                double costPerSecond = 0.1;
+                double costPerSecond = 0;//0.1;
 
                 //could return dist^2 but who needs that kind of speed (optimization)
                 return sqrt( pow(goalPose.x - currentPose.position.x, 2) + pow(goalPose.y - currentPose.position.y, 2) + pow(goalPose.z - currentPose.position.z, 2) ) + time * costPerSecond;

@@ -55,6 +55,7 @@ namespace bt_state
         ros::Publisher pub_cancel_explore;
 
         ros::Publisher pub_motor_failed_point;
+        ros::Publisher pub_shutdown_motors_flag;
     };
 
 
@@ -116,7 +117,7 @@ namespace bt_state
         state.pub_goal_plot = state.nodeHandle.advertise<geometry_msgs::Point>("plot/explore_goal", 100);
         state.pub_cancel_explore = state.nodeHandle.advertise<geometry_msgs::Point>("plot/explore_cancel", 100);
         state.pub_motor_failed_point = state.nodeHandle.advertise<geometry_msgs::Point>("plot/pub_motor_failed_point", 100);
-
+        state.pub_shutdown_motors_flag = state.nodeHandle.advertise<std_msgs::Bool>("shutdown_flag", 100);
 
     }
 

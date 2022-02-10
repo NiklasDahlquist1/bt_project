@@ -3,11 +3,13 @@
 
   
   <node name="controller1" pkg="bt_project" type="crazyflie_controller.py" output="screen">
-    <remap from="odom" to="/pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom"/>
+    <remap from="odom" to="/pixy/vicon/demo_crazyflie3/demo_crazyflie3/odom"/>
     <remap from="reference" to="/uav1/reference"/>
-    <remap from="cmd_vel" to="/demo_crazyflie4/cmd_vel"/>
+    <remap from="cmd_vel" to="/demo_crazyflie3/cmd_vel"/>
+    
+    <remap from="shutdown_flag" to="uav_client_1/shutdown_flag"/>
 
-    <rosparam param="xref">0</rosparam>
+    <rosparam param="xref">-0.5</rosparam>
     <rosparam param="yref">4</rosparam>
     <rosparam param="zref">0.25</rosparam>
   </node>

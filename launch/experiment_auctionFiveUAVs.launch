@@ -77,6 +77,7 @@
     <remap from="odometry" to="odom1?" />
     <remap from="uavGoal" to="uav1/reference"/>
     <remap from="motor_fail" to="uav_clinet_1/motor_fail"/>
+    <remap from="shutdown_flag" to="uav_client_1/shutdown_flag"/>
 
     <remap from="mav_moveto_action/cancel" to="mav_moveto_action1/cancel" />
     <remap from="mav_moveto_action/feedback" to="mav_moveto_action1/feedback" />
@@ -89,6 +90,7 @@
     <remap from="odometry" to="odom2?" />
     <remap from="uavGoal" to="uav2/reference"/>
     <remap from="motor_fail" to="uav_clinet_2/motor_fail"/>
+    <remap from="shutdown_flag" to="uav_client_2/shutdown_flag"/>
 
     <remap from="mav_moveto_action/cancel" to="mav_moveto_action2/cancel" />
     <remap from="mav_moveto_action/feedback" to="mav_moveto_action2/feedback" />
@@ -101,6 +103,7 @@
     <remap from="odometry" to="odom3?" />
     <remap from="uavGoal" to="uav3/reference"/>
     <remap from="motor_fail" to="uav_clinet_3/motor_fail"/>
+    <remap from="shutdown_flag" to="uav_client_3/shutdown_flag"/>
 
     <remap from="mav_moveto_action/cancel" to="mav_moveto_action3/cancel" />
     <remap from="mav_moveto_action/feedback" to="mav_moveto_action3/feedback" />
@@ -113,6 +116,7 @@
     <remap from="odometry" to="odom4?" />
     <remap from="uavGoal" to="uav4/reference"/>
     <remap from="motor_fail" to="uav_clinet_4/motor_fail"/>
+    <remap from="shutdown_flag" to="uav_client_4/shutdown_flag"/>
 
     <remap from="mav_moveto_action/cancel" to="mav_moveto_action4/cancel" />
     <remap from="mav_moveto_action/feedback" to="mav_moveto_action4/feedback" />
@@ -125,6 +129,7 @@
     <remap from="odometry" to="odom5?" />
     <remap from="uavGoal" to="uav5/reference"/>
     <remap from="motor_fail" to="uav_clinet_5/motor_fail"/>
+    <remap from="shutdown_flag" to="uav_client_5/shutdown_flag"/>
 
     <remap from="mav_moveto_action/cancel" to="mav_moveto_action5/cancel" />
     <remap from="mav_moveto_action/feedback" to="mav_moveto_action5/feedback" />

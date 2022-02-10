@@ -5,9 +5,12 @@ from std_msgs.msg import String
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Twist
 from geometry_msgs.msg import PoseStamped
-import time 
-import numpy 
+import time
+import numpy
 import math
+
+from std_msgs.msg import Bool
+
 xpos = 0
 ypos = 0
 zpos = 0
@@ -56,11 +59,11 @@ def callback(data):
     qz = data.pose.pose.orientation.z
     qw = data.pose.pose.orientation.w
     d_yaw = data.twist.twist.angular.z
-    [roll, pitch, yaw] = quaternion_to_euler(qx,qy,qz,qw) 
+    [roll, pitch, yaw] = quaternion_to_euler(qx,qy,qz,qw)
 
     vx = data.twist.twist.linear.x
     vy = data.twist.twist.linear.y
-    vz = data.twist.twist.linear.z  
+    vz = data.twist.twist.linear.z
 
 def callback_ref(data):
     global xref, yref, zref, yawref
@@ -75,17 +78,26 @@ def callback_safety(data):
     land_flag = 1
 
 
+def callback_shutdown(data):
+    global shutdown_flag
+    shutdown_flag = data.data
+
+
 
 
 def controller():
-    pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
     rospy.init_node('controller', anonymous=True)
+    pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
     sub = rospy.Subscriber('odom', Odometry, callback)
     sub_safety = rospy.Subscriber('safety_land', String, callback_safety)
     sub_ref = rospy.Subscriber('reference', PoseStamped, callback_ref)
     rate = rospy.Rate(20) # 20hz
     global xref, yref, zref, integrator, land_flag, yawref
 
+
+    sub_shutdown_flag = rospy.Subscriber("shutdown_flag", Bool, callback_shutdown)
+    global shutdown_flag
+    shutdown_flag = True
 
     xref = 0
     yref = 4
@@ -129,10 +141,10 @@ def controller():
         xref_body = math.cos(yaw)*xref + math.sin(yaw)*yref
         yref_body = -math.sin(yaw)*xref + math.cos(yaw)*yref
 
-        print(xref, yref, zref, yawref)
-        
-       
-       
+        #print(xref, yref, zref, yawref)
+
+
+
         ###Implement your controller
         integrator = integrator + 0.001*(zref-zpos)
         ang_diff = numpy.mod(yawref - yaw + math.pi, 2*math.pi) - math.pi
@@ -167,17 +179,27 @@ def controller():
 
         cmd_vel = Twist()
         cmd_vel.linear.x = u_p
-        cmd_vel.linear.y = u_r 
+        cmd_vel.linear.y = u_r
         cmd_vel.linear.z = u_t
         cmd_vel.angular.z = u_y
-        pub.publish(cmd_vel)
+        if(shutdown_flag == False):
+            pub.publish(cmd_vel)
+        else:
+            cmd_vel.linear.x = 0
+            cmd_vel.linear.y = 0
+            cmd_vel.linear.z = 0
+            cmd_vel.angular.z = 0
+            integrator = 0 # reset integrator?
+            pub.publish(cmd_vel)
+
+
         rate.sleep()
 
         t = t + 1
- 
-if __name__ == '__main__':
-     try:
-         controller()
-     except rospy.ROSInterruptException:
-         pass
 
+
+if __name__ == '__main__':
+    try:
+        controller()
+    except rospy.ROSInterruptException:
+        pass

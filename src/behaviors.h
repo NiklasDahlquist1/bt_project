@@ -214,6 +214,20 @@ namespace behaviors
                 {
                     // set bool to stop bidding TODO implement
                     state->canBidForNewTask = false;
+
+                    geometry_msgs::PoseStamped p;
+                    state->UAVTaskFailedHoldPoint.position = state->mavPose.position;
+                    state->UAVTaskFailedHoldPoint.orientation.x = 0;
+                    state->UAVTaskFailedHoldPoint.orientation.y = 0;
+                    state->UAVTaskFailedHoldPoint.orientation.z = 0;
+                    state->UAVTaskFailedHoldPoint.orientation.w = 1;
+
+
+                    p.pose = state->UAVTaskFailedHoldPoint;
+                    p.header.stamp = ros::Time::now();
+                    state->pub_uavWP.publish(p);
+                    std::cout << "MOTOR failure? publishing current pose" << std::endl;
+
                     return BT::NodeStatus::FAILURE;
                 }
 
@@ -844,6 +858,14 @@ class UAVAtPointOnce : public BT::SyncActionNode
             //goal_.pose_goal.position.z = 4;
 
 
+
+            // "start" motors
+            std_msgs::Bool flag;
+            flag.data = false;
+            this->state->pub_shutdown_motors_flag.publish(flag);
+
+
+
             startPose = this->state->mavPose;
 
             goal_.pose_goal = startPose;
@@ -1267,6 +1289,12 @@ class UAVAtPointOnce : public BT::SyncActionNode
                     {
                         std::cout << "LANDED " << ros::this_node::getName() << std::endl;
                         this->state->isFlying = false;
+
+
+                        //"shut down" motors
+                        std_msgs::Bool flag;
+                        flag.data = true;
+                        this->state->pub_shutdown_motors_flag.publish(flag);
 
 
                         // publish goal position once to stop

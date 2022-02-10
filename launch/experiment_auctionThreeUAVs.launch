@@ -22,8 +22,8 @@
   <node name="obs_points" pkg="bt_project" type="obstacles">
     <remap from="odometry_UAV_1" to="pixy/vicon/demo_crazyflie4/demo_crazyflie4/odom"/>
     <remap from="odometry_UAV_2" to="pixy/vicon/demo_crazyflie3/demo_crazyflie3/odom"/>
-<!--    <remap from="odometry_UAV_3" to="odom3?"/>
-    <remap from="odometry_UAV_4" to="odom4?"/>
+    <remap from="odometry_UAV_3" to="pixy/vicon/demo_crazyflie6/demo_crazyflie6/odom"/>
+<!--    <remap from="odometry_UAV_4" to="odom4?"/>
     <remap from="odometry_UAV_5" to="odom5?"/> -->
   </node>
 
@@ -41,13 +41,17 @@
     <remap from="goalPose" to="uav2/reference" />
   </node>
 
+  <node name="mav_moveto_action3" pkg="test_action" type="moveto_server">
+    <remap from="odometry" to="pixy/vicon/demo_crazyflie6/demo_crazyflie6/odom" />
+    <remap from="goalPose" to="uav3/reference" />
+  </node>
 
 
 
 
   <node name="auction_server" pkg="bt_project" type="auction_server" output="screen">
     <rosparam param="auction_timeout">6.0</rosparam>
-    <rosparam param="bids_threshold">2</rosparam>
+    <rosparam param="bids_threshold">3</rosparam>
   </node>
 
 
@@ -78,6 +82,19 @@
     <remap from="mav_moveto_action/goal" to="mav_moveto_action2/goal" />
     <remap from="mav_moveto_action/result" to="mav_moveto_action2/result" />
     <remap from="mav_moveto_action/status" to="mav_moveto_action2/status" /> 
+  </node>
+
+  <node name="uav_client_3" pkg="bt_project" type="client" output="screen">
+    <remap from="odometry" to="pixy/vicon/demo_crazyflie6/demo_crazyflie6/odom" />
+    <remap from="uavGoal" to="uav3/reference"/>
+    <remap from="motor_fail" to="uav_clinet_3/motor_fail"/>
+    <remap from="shutdown_flag" to="uav_client_3/shutdown_flag"/>
+
+    <remap from="mav_moveto_action/cancel" to="mav_moveto_action3/cancel" />
+    <remap from="mav_moveto_action/feedback" to="mav_moveto_action3/feedback" />
+    <remap from="mav_moveto_action/goal" to="mav_moveto_action3/goal" />
+    <remap from="mav_moveto_action/result" to="mav_moveto_action3/result" />
+    <remap from="mav_moveto_action/status" to="mav_moveto_action3/status" /> 
   </node>
 
 
