@@ -130,6 +130,7 @@ def callbacks():
     #input("Press Enter to continue...") # requires python3... 
     raw_input("Press Enter to continue...") # python2
  
+
 def plot2():
 
 
@@ -141,13 +142,14 @@ def plot2():
     # plot
 
 
-    plt.rc('text', usetex=False) # gotta install latex for this
+    #plt.rc('text', usetex=True) # gotta install latex for this
     plt.rcParams.update({
+    "text.usetex": True,
     "font.family": "serif",
     "font.serif": ["Computer Modern Roman"],
     #"ps.usedistiller" : "xpdf",
-    "font.size" : 11,
-    "axes.titlesize" : 15, #16
+    "font.size" : 13,
+    "axes.titlesize" : 16, #16
 })
 
 
@@ -201,11 +203,12 @@ def plot2():
         l_w = 1.1
         if(len(t) > 0):
             ax1.plot(t, x, label='UAV ' + str(i + 1), linewidth=l_w)
-            ax2.plot(t, y, label='Path ' + str(i), linewidth=l_w)
-            ax3.plot(t, z, label='Path ' + str(i), linewidth=l_w)
+            ax2.plot(t, y, label='UAV ' + str(i + 1), linewidth=l_w)
+            ax3.plot(t, z, label='UAV ' + str(i + 1), linewidth=l_w)
 
 
-    ax1.set_title('Lab experiment')
+    #ax1.set_title('Lab experiment')
+    ax1.set_title('Simulation')
     ax1.set_ylabel('x [m]')
     ax2.set_ylabel('y [m]')
     ax3.set_ylabel('z [m]')
@@ -248,13 +251,13 @@ def plot3():
     # plot
 
 
-    plt.rc('text', usetex=False) # gotta install latex for this
+    plt.rc('text', usetex=True) # gotta install latex for this
     plt.rcParams.update({
     "font.family": "serif",
     "font.serif": ["Computer Modern Roman"],
     #"ps.usedistiller" : "xpdf",
-    "font.size" : 11,
-    "axes.titlesize" : 15, #16
+    "font.size" : 13,
+    "axes.titlesize" : 16, #16
     })
 
 
@@ -378,13 +381,21 @@ def plot3():
 
     # custom legends
     legend_elements = [Line2D([0], [0], color='b', lw=linewidth_plot, label='UAV Paths'),
-                       Line2D([0], [0], marker='^', color='w', label='Failed tasks', markeredgewidth=linewidth_marker, markeredgecolor="k", markerfacecolor='r', markersize=10),
-                       Line2D([0], [0], marker='^', color='w', label='Reached tasks', markeredgewidth=linewidth_marker, markeredgecolor="k", markerfacecolor='g', markersize=10),
+                       
+                       
                        
                        ]
                        #,
                        #Patch(facecolor='orange', edgecolor='r',
                        #  label='Color Patch')]
+
+
+    # add points related to moveTo tasks if they exists
+    if(len(task_succeeded_points) > 0):
+        legend_elements.append(Line2D([0], [0], marker='^', color='w', label='Reached tasks', markeredgewidth=linewidth_marker, markeredgecolor="k", markerfacecolor='g', markersize=10))
+
+    if(len(task_aborted_points) > 0):
+        legend_elements.append(Line2D([0], [0], marker='^', color='w', label='Failed tasks', markeredgewidth=linewidth_marker, markeredgecolor="k", markerfacecolor='r', markersize=10))
 
 
     # add points related to explore if they exists
@@ -395,10 +406,10 @@ def plot3():
         legend_elements.append(Line2D([0], [0], marker='^', color='w', label='Explore timeout', markeredgewidth=linewidth_marker, markeredgecolor="k", markerfacecolor='y', markersize=10))
 
     if(len(motor_fail_points) > 0):
-        legend_elements.append(Line2D([0], [0], marker='^', color='orange', label='UAV Failure', markeredgewidth=linewidth_marker, markeredgecolor="k", markerfacecolor='y', markersize=10))
+        legend_elements.append(Line2D([0], [0], marker='^', color='w', label='UAV Failure', markeredgewidth=linewidth_marker, markeredgecolor="k", markerfacecolor='orange', markersize=10))
 
 
-    ax.legend(handles=legend_elements, loc='best')
+    ax.legend(handles=legend_elements, loc='upper right')
 
 
     
@@ -408,7 +419,8 @@ def plot3():
     ax.set_ylabel('Y [m]')
     ax.set_xlabel('X [m]')
     ax.set_zlabel('Z [m]')
-    ax.set_title('Lab experiment')
+    #ax.set_title('Lab experiment')
+    ax.set_title('Simulation')
     
 
     plt.savefig('plot3.eps') 
@@ -442,7 +454,7 @@ if __name__ == '__main__':
         rospy.init_node('plotter', anonymous=True)
         callbacks()
         plot3()
-        #plot2()
+        plot2()
 
     except rospy.ROSInterruptException:
         pass
