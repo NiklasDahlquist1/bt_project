@@ -1,3 +1,2 @@
-Project involving behavior trees
-master thesis
+Project involving behavior trees (master thesis)
 
